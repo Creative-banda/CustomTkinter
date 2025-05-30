@@ -1,0 +1,26 @@
+[
+    {
+        "question": "What is the largest planet in our solar system?",
+        "options": ["Earth", "Jupiter", "Saturn", "Mars"],
+        "correct": 1,
+        "explanation": "Jupiter is the largest planet in our solar system."
+    },
+    {
+        "question": "Which continent is the largest?",
+        "options": ["Africa", "Asia", "Europe", "North America"],
+        "correct": 1,
+        "explanation": "Asia is the largest continent by both area and population."
+    },
+    {
+        "question": "What is 15 X 8?",
+        "options": ["120", "115", "125", "130"],
+        "correct": 0,
+        "explanation": "15 X 8 = 120"
+    },
+    {
+        "question": "Who wrote 'Romeo and Juliet'?",
+        "options": ["Charles Dickens", "William Shakespeare", "Mark Twain", "Jane Austen"],
+        "correct": 1,
+        "explanation": "William Shakespeare wrote the famous play 'Romeo and Juliet'."
+    }
+]

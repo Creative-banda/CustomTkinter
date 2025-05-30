@@ -1,0 +1,7 @@
+ [
+            {"scrambled": ["The", "dog", "can", "jump", "high"], "correct": "The dog can jump high"},
+            {"scrambled": ["Plants", "need", "sunlight", "to", "grow"], "correct": "Plants need sunlight to grow"},
+            {"scrambled": ["Earth", "revolves", "around", "the", "sun"], "correct": "Earth revolves around the sun"},
+            {"scrambled": ["Water", "boils", "at", "100", "degrees"], "correct": "Water boils at 100 degrees"},
+            {"scrambled": ["Birds", "have", "feathers", "and", "wings"], "correct": "Birds have feathers and wings"}
+        ]
