@@ -384,7 +384,7 @@ class WordverseGame:
         self.sentence_content_frame = ctk.CTkFrame( self.game_frame, corner_radius=20, border_width=2,
                                                    border_color=("#3d3d5c", "#1f1f2e"), fg_color=("#2d2d44", "#16162b")
         )
-        self.sentence_content_frame.pack(expand=True, fill="both", padx=60, pady=(20, 40), ipadx=20, ipady=20)
+        self.sentence_content_frame.pack(expand=True, fill="both", padx=60, pady=(20, 40))
         
         # Select random sentence
         self.current_sentence_data = random.choice(self.sentences)
@@ -562,64 +562,70 @@ class WordverseGame:
         for widget in self.root.winfo_children():
             widget.destroy()
         
-        # Game frame
-        self.game_frame = ctk.CTkFrame(self.root, corner_radius=0)
+        # Game frame with gradient background
+        self.game_frame = ctk.CTkFrame(self.root, corner_radius=0, fg_color=("#1a1a2e", "#0f0f1a"))
         self.game_frame.pack(fill="both", expand=True)
         
-        # Header
-        header_frame = ctk.CTkFrame(self.game_frame)
-        header_frame.pack(fill="x", padx=20, pady=10)
+        # Header with modern styling
+        header_frame = ctk.CTkFrame(self.game_frame, fg_color=("#1A1A2E", "#0F111A"), corner_radius=15)
+        header_frame.pack(fill="x", padx=30, pady=(20, 10))
 
-        ctk.CTkLabel(header_frame, text="❓ Subject Quiz", font=(self.font, 32, "bold")).pack(side="left", padx=20, pady=10)
+        ctk.CTkLabel( header_frame,  text="❓ Subject Quiz",  font=(self.font, 38, "bold"), text_color=("#45B7D1", "#3A9BC1")
+        ).pack(side="left", padx=20, pady=10)
 
-        self.game_score_label = ctk.CTkLabel(header_frame, text=f"Score: {self.current_score}", font=(self.font, 16))
+        self.game_score_label = ctk.CTkLabel( header_frame,  text=f"Score: {self.current_score}",  font=(self.font, 20, "bold"), text_color=("#4ecca3", "#2c9c7a")
+        )
         self.game_score_label.pack(side="right", padx=20, pady=10)
         
-        # Back button
-        back_btn = ctk.CTkButton(header_frame, text="🏠 Home", command=self.setup_main_window, width=80)
-        back_btn.pack(side="right", padx=10, pady=10)
+        # Stylish back button
+        back_btn = ctk.CTkButton( header_frame,  text="🏠 Home",  command=self.setup_main_window,  width=100, 
+                                 height=40,  corner_radius=15,  font=(self.font, 16, "bold"),  fg_color="#5352ed",  
+                                 hover_color="#3742fa", border_width=2,  border_color="#2c3e50"
+        )
+        back_btn.pack(side="right", padx=15, pady=10)
         
-        # Game content
-        self.quiz_content_frame = ctk.CTkFrame(self.game_frame)
-        self.quiz_content_frame.pack(expand=True, fill="both", padx=40, pady=20)
+        # Game content with shadow effect
+        self.quiz_content_frame = ctk.CTkFrame( self.game_frame,  corner_radius=20,  border_width=2, border_color=("#3d3d5c", "#1f1f2e"),  fg_color=("#2d2d44", "#16162b")
+        )
+        self.quiz_content_frame.pack(expand=True, fill="both", padx=60, pady=(20, 40), ipadx=20, ipady=20)
         
         # Select random question
         self.current_question = random.choice(self.quiz_questions)
         
-        # Question display
-        self.question_label = ctk.CTkLabel(
-            self.quiz_content_frame,
-            text=self.current_question["question"],
-            font=(self.font, 20, "bold"),
-            wraplength=800
+        # Question display with enhanced styling
+        self.question_label = ctk.CTkLabel( self.quiz_content_frame, text=self.current_question["question"], font=(self.font, 24, "bold"),
+                                           wraplength=800, text_color=("#E0E0E0", "#C0C0C0")
         )
-        self.question_label.pack(pady=30)
+        self.question_label.pack(pady=30, padx=40)
         
-        # Options frame
-        self.options_frame = ctk.CTkFrame(self.quiz_content_frame)
-        self.options_frame.pack(pady=20)
+        # Options frame with visual distinction
+        self.options_frame = ctk.CTkFrame( self.quiz_content_frame,  fg_color=("#222236", "#121220"), corner_radius=15,  border_width=1,  border_color=("#3d3d5c", "#1f1f2e")
+        )
+        self.options_frame.pack(pady=20, padx=40, fill="x")
         
         # Create option buttons
         self.option_buttons = []
         self.selected_option = tk.IntVar(value=-1)
         
         for i, option in enumerate(self.current_question["options"]):
-            btn = ctk.CTkButton( self.options_frame, text=f"{chr(65+i)}. {option}", command=lambda idx=i: self.select_quiz_option(idx), 
-                                width=400, height=50, font=(self.font, 16), fg_color="#2196F3", hover_color="#1976D2")
-            btn.pack(pady=10)
+            btn = ctk.CTkButton( self.options_frame,  text=option,  command=lambda idx=i: self.select_quiz_option(idx),width=500,  height=60,  
+                                font=(self.font, 18), fg_color="#2196F3",  hover_color="#1976D2", corner_radius=10, border_width=1, border_color="#1565C0"
+            )
+            btn.pack(pady=12, padx=30)
             self.option_buttons.append(btn)
         
-        # Submit button
-        self.quiz_submit_btn = ctk.CTkButton(self.quiz_content_frame,text="✅ Submit Answer",command=self.check_quiz_answer,font=(self.font, 18, "bold"),
-                                             fg_color="#4CAF50",hover_color="#45a049",width=200,height=50)
+        # Submit button 
+        self.quiz_submit_btn = ctk.CTkButton( self.quiz_content_frame, text="✅ Submit Answer", command=self.check_quiz_answer, font=(self.font, 20, "bold"), 
+                                             fg_color="#4CAF50", hover_color="#45a049", width=220, height=60, corner_radius=12, border_width=2, border_color="#2d6a4f"
+        )
         self.quiz_submit_btn.pack(pady=30)
         
-        # Next question button (initially hidden)
-        self.next_quiz_btn = ctk.CTkButton(self.quiz_content_frame,text="➡️ Next Question",command=self.next_quiz_question,font=(self.font, 16, "bold") , 
-                                           fg_color="#FF9800",hover_color="#F57C00",width=200,height=40)
+        # Next question button
+        self.next_quiz_btn = ctk.CTkButton( self.quiz_content_frame, text="➡️ Next Question", command=self.next_quiz_question, font=(self.font, 18, "bold"), 
+                                           fg_color="#FF9800", hover_color="#F57C00", width=220, height=60, corner_radius=12, border_width=2, border_color="#b35900")
         
         # Feedback label
-        self.quiz_feedback_label = ctk.CTkLabel(self.quiz_content_frame, text="", font=(self.font, 16))
+        self.quiz_feedback_label = ctk.CTkLabel( self.quiz_content_frame,  text="",  font=(self.font, 18, "bold"), height=60, corner_radius=10, wraplength=700)
         self.quiz_feedback_label.pack(pady=20)
     
     def select_quiz_option(self, option_index):
