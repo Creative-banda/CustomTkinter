@@ -3,10 +3,7 @@ import tkinter as tk
 from tkinter import messagebox
 import random
 import json
-import pygame
 
-# Initialize pygame mixer for sound effects
-pygame.mixer.init()
 
 # Set CustomTkinter appearance
 ctk.set_appearance_mode("dark")
@@ -20,6 +17,7 @@ class WordverseGame:
         
         # make the window full screen
         self.root.attributes("-fullscreen", True)
+        # self.root.attributes("-topmost", True)
         self.root.bind("<Escape>", lambda e: self.root.attributes("-fullscreen", False))
         self.root.bind("<F11>", lambda e: self.root.attributes("-fullscreen", True))
         self.font = ctk.CTkFont(family="Arial", size=20, weight="bold")
@@ -28,8 +26,8 @@ class WordverseGame:
         # Game state variables
         self.current_score = 0
         self.streak_count = 0
-        self.current_game_mode = None
         self.is_animating = False
+        self.font = "Chewy"
         
         # Game data
         self.setup_game_data()
@@ -62,91 +60,95 @@ class WordverseGame:
             print(f"{file_name} Not Found")
         
     def setup_main_window(self):
-        """Create the main landing page"""
+        """Create the main landing page with enhanced visual appeal"""
         # Clear window
         for widget in self.root.winfo_children():
             widget.destroy()
         
-        # Main frame with gradient background
-        self.main_frame = ctk.CTkFrame(self.root, corner_radius=0)
+        # Create a background with gradient effect
+        self.main_frame = ctk.CTkFrame(self.root, corner_radius=0, fg_color=("#2B2D42", "#121420"))
         self.main_frame.pack(fill="both", expand=True)
+        
+        # Header container with colored background
+        self.header_frame = ctk.CTkFrame(self.main_frame, fg_color=("#1A1A2E", "#0F111A"), corner_radius=15)
+        self.header_frame.pack(pady=(40, 20), padx=80, fill="x")
         
         # Title with glow effect
         self.title_label = ctk.CTkLabel(
-            self.main_frame,
+            self.header_frame,
             text="✨ Wordverse: Learn & Conquer ✨",
-            font=(self.font, 48, "bold"),
+            font=(self.font, 52, "bold"),
             text_color=("#FFD700", "#FFA500")
         )
-        self.title_label.pack(pady=50)
+        self.title_label.pack(pady=(20, 5))
         
-        # Animated subtitle
+        # Subtitle with better styling
         self.subtitle_label = ctk.CTkLabel(
-            self.main_frame,
+            self.header_frame,
             text="🧙‍♂️ Master Words, Conquer Knowledge! 🏆",
-            font=(self.font, 20),
+            font=(self.font, 24),
             text_color=("#E6E6FA", "#DDA0DD")
         )
-        self.subtitle_label.pack(pady=10)
+        self.subtitle_label.pack(pady=(0, 20))
         
-        # Score display
-        self.score_frame = ctk.CTkFrame(self.main_frame)
-        self.score_frame.pack(pady=20)
+        # Score display with visually appealing styling
+        self.score_frame = ctk.CTkFrame(self.main_frame, corner_radius=20, fg_color=("#3E2C41", "#1F1D36"))
+        self.score_frame.pack(pady=30, padx=200)
         
         self.score_label = ctk.CTkLabel(
             self.score_frame,
             text=f"🏆 Total Score: {self.current_score} | 🔥 Streak: {self.streak_count}",
-            font=(self.font, 16, "bold")
+            font=(self.font, 18, "bold"),
+            text_color=("#FFFBAC", "#F8F9D7")
         )
-        self.score_label.pack(padx=20, pady=10)
+        self.score_label.pack(padx=30, pady=15)
+        
+        # Game mode buttons in a visually distinct container
+        self.buttons_container = ctk.CTkFrame(self.main_frame, fg_color="transparent")
+        self.buttons_container.pack(pady=20, fill="both", expand=True, padx=80)
+        
+        # Title for game modes section
+        self.modes_label = ctk.CTkLabel(
+            self.buttons_container,
+            text="Select Your Challenge",
+            font=(self.font, 28, "bold"),
+            text_color=("#B8C0FF", "#96BAFF")
+        )
+        self.modes_label.pack(pady=(0, 20))
         
         # Game mode buttons
-        self.buttons_frame = ctk.CTkFrame(self.main_frame)
-        self.buttons_frame.pack(pady=40, padx=100, fill="x")
+        self.buttons_frame = ctk.CTkFrame(self.buttons_container, fg_color="transparent")
+        self.buttons_frame.pack(pady=10, fill="both", expand=True)
         
         # Create game mode buttons
         self.create_game_buttons()
         
-        # Settings button
-        self.settings_btn = ctk.CTkButton(
-            self.main_frame,
-            text="⚙️ Settings",
-            command=self.show_settings,
-            width=120,
-            height=35
-        )
-        self.settings_btn.pack(pady=10)
-        
-        # Start title animation
-        # self.animate_title()
-    
+        # Exit button
+        self.exit_button = ctk.CTkButton( self.main_frame, text="Exit Game", font=(self.font, 16), fg_color="#B91646",
+                                         hover_color="#A21441", width=120, height=40, corner_radius=10, command=self.root.destroy )
+        self.exit_button.pack(pady=(10, 30))
+            
     def create_game_buttons(self):
-        """Create animated game mode selection buttons"""
-        button_configs = [
-            {"text": "🧩 Word Scramble", "command": self.start_word_scramble, "color": "#FF6B6B"},
-            {"text": "📖 Sentence Builder", "command": self.start_sentence_builder, "color": "#4ECDC4"},
-            {"text": "❓ Subject Quiz", "command": self.start_subject_quiz, "color": "#45B7D1"},
-            {"text": "🔀 Word Match", "command": self.start_word_match, "color": "#96CEB4"}
-        ]
-        
-        for i, config in enumerate(button_configs):
-            btn = ctk.CTkButton(
-                self.buttons_frame,
-                text=config["text"],
-                command=config["command"],
-                width=250,
-                height=60,
-                font=(self.font, 18, "bold"),
-                fg_color=config["color"],
-                hover_color=self.darken_color(config["color"])
-            )
-            row = i // 2
-            col = i % 2
-            btn.grid(row=row, column=col, padx=20, pady=20, sticky="ew")
-        
-        # Configure grid weights
-        self.buttons_frame.grid_columnconfigure(0, weight=1)
-        self.buttons_frame.grid_columnconfigure(1, weight=1)
+            """Create animated game mode selection buttons"""
+            button_configs = [
+                {"text": "🧩 Word Scramble", "command": self.setup_word_scramble, "color": "#FF6B6B"},
+                {"text": "📖 Sentence Builder", "command": self.setup_sentence_builder, "color": "#4ECDC4"},
+                {"text": "❓ Subject Quiz", "command": self.setup_subject_quiz, "color": "#45B7D1"},
+                {"text": "🔀 Word Match", "command": self.setup_word_match, "color": "#96CEB4"}
+            ]
+            
+            for i, config in enumerate(button_configs):
+                btn = ctk.CTkButton( self.buttons_frame, text=config["text"], width=250, height=100, 
+                                    command=config["command"], font=(self.font, 18, "bold"), fg_color=config["color"],
+                                    hover_color=self.darken_color(config["color"]), corner_radius=20,
+                )
+                row = i // 2
+                col = i % 2
+                btn.grid(row=row, column=col, padx=20, pady=20, sticky="ew")
+            
+            # Configure grid weights
+            self.buttons_frame.grid_columnconfigure(0, weight=1)
+            self.buttons_frame.grid_columnconfigure(1, weight=1)
     
     def darken_color(self, color):
         """Create a darker version of a color for hover effect"""
@@ -159,70 +161,10 @@ class WordverseGame:
         }
         return color_map.get(color, color)
     
-    def animate_title(self):
-        """Animate the title with a pulsing effect"""
-        if not hasattr(self, 'title_animation_step'):
-            self.title_animation_step = 0
-        
-        colors = [("#7BFF00", "#007185"), ("#FFA500", "#FF8C00"), ("#FF8C00", "#FFD700")]
-        current_color = colors[self.title_animation_step % len(colors)]
-        self.title_label.configure(text_color=current_color)
-        
-        self.title_animation_step += 1
-        self.root.after(1000, self.animate_title)
-    
-    def show_settings(self):
-        """Show settings dialog"""
-        settings_window = ctk.CTkToplevel(self.root)
-        settings_window.title("Settings")
-        settings_window.geometry("400x300")
-        settings_window.transient(self.root)
-        
-        # Theme toggle
-        theme_frame = ctk.CTkFrame(settings_window)
-        theme_frame.pack(pady=20, padx=20, fill="x")
-
-        ctk.CTkLabel(theme_frame, text="Theme:", font=(self.font, 16, "bold")).pack(pady=10)
-
-        theme_var = tk.StringVar(value=ctk.get_appearance_mode())
-        
-        def change_theme():
-            new_theme = theme_var.get()
-            ctk.set_appearance_mode(new_theme)
-        
-        ctk.CTkRadioButton(theme_frame, text="Dark", variable=theme_var, value="dark", command=change_theme).pack(pady=5)
-        ctk.CTkRadioButton(theme_frame, text="Light", variable=theme_var, value="light", command=change_theme).pack(pady=5)
-        
-        # Reset score button
-        reset_btn = ctk.CTkButton(
-            settings_window,
-            text="🔄 Reset All Scores",
-            command=self.reset_scores,
-            fg_color="#FF4444",
-            hover_color="#DD3333"
-        )
-        reset_btn.pack(pady=20)
-        
-        # Close button
-        close_btn = ctk.CTkButton(settings_window, text="Close", command=settings_window.destroy)
-        close_btn.pack(pady=10)
-    
-    def reset_scores(self):
-        """Reset all game scores"""
-        self.current_score = 0
-        self.streak_count = 0
-        self.update_score_display()
-        messagebox.showinfo("Reset", "Scores have been reset!")
-    
     def update_score_display(self):
         """Update the score display"""
         if hasattr(self, 'score_label'):
             self.score_label.configure(text=f"🏆 Total Score: {self.current_score} | 🔥 Streak: {self.streak_count}")
-    
-    def start_word_scramble(self):
-        """Start the Word Scramble game"""
-        self.current_game_mode = "scramble"
-        self.setup_word_scramble()
     
     def setup_word_scramble(self):
         """Setup Word Scramble game interface"""
@@ -230,113 +172,111 @@ class WordverseGame:
         for widget in self.root.winfo_children():
             widget.destroy()
         
-        # Game frame
-        self.game_frame = ctk.CTkFrame(self.root, corner_radius=0)
+        # Game frame with gradient background
+        self.game_frame = ctk.CTkFrame(self.root, corner_radius=0, fg_color=("#1a1a2e", "#0f0f1a"))
         self.game_frame.pack(fill="both", expand=True)
         
-        # Header
-        header_frame = ctk.CTkFrame(self.game_frame)
-        header_frame.pack(fill="x", padx=20, pady=10)
+        # Header with modern styling
+        header_frame = ctk.CTkFrame(self.game_frame, fg_color="transparent")
+        header_frame.pack(fill="x", padx=30, pady=(20, 10))
 
-        ctk.CTkLabel(header_frame, text="🧩 Word Scramble", font=(self.font, 32, "bold")).pack(side="left", padx=20, pady=10)
+        ctk.CTkLabel(
+            header_frame, 
+            text="🧩 Word Scramble Challenge", 
+            font=(self.font, 38, "bold"),
+            text_color=("#FFD700", "#FFA500")  # Gold gradient
+        ).pack(side="left", padx=20, pady=10)
 
-        self.game_score_label = ctk.CTkLabel(header_frame, text=f"Score: {self.current_score}", font=(self.font, 16))
+        self.game_score_label = ctk.CTkLabel(
+            header_frame, 
+            text=f"Score: {self.current_score}", 
+            font=(self.font, 20, "bold"),
+            text_color=("#4ecca3", "#2c9c7a")  # Teal gradient
+        )
         self.game_score_label.pack(side="right", padx=20, pady=10)
         
-        # Back button
-        back_btn = ctk.CTkButton(header_frame, text="🏠 Home", command=self.setup_main_window, width=80)
-        back_btn.pack(side="right", padx=10, pady=10)
+        # Stylish back button
+        back_btn = ctk.CTkButton( header_frame,  text="🏠 Home",  command=self.setup_main_window,  width=100,
+                                 height=40, corner_radius=15, font=(self.font, 16, "bold"), fg_color="#5352ed", 
+                                 hover_color="#3742fa", border_width=2, border_color="#2c3e50" )
+        back_btn.pack(side="right", padx=15, pady=10)
         
-        # Game content
-        self.scramble_content_frame = ctk.CTkFrame(self.game_frame)
-        self.scramble_content_frame.pack(expand=True, fill="both", padx=40, pady=20)
+        # Game content with shadow effect
+        self.scramble_content_frame = ctk.CTkFrame( self.game_frame, corner_radius=20, border_width=2,
+                                                   border_color=("#3d3d5c", "#1f1f2e"), fg_color=("#2d2d44", "#16162b") )
+        self.scramble_content_frame.pack(expand=True, fill="both", padx=80, pady=(20, 40), ipadx=20, ipady=20)
         
         # Select random word
         self.current_category = random.choice(list(self.scramble_words.keys()))
         self.current_word = random.choice(self.scramble_words[self.current_category])
         self.scrambled_word = self.scramble_word(self.current_word)
         
-        # Display scrambled word
-        ctk.CTkLabel(
-            self.scramble_content_frame,
-            text=f"Category: {self.current_category}",
-            font=(self.font, 18, "bold")
-        ).pack(pady=20)
+        # Display category with badge-like design
+        category_frame = ctk.CTkFrame( self.scramble_content_frame,  fg_color="#2980b9", corner_radius=15)
+        category_frame.pack(pady=(30, 20))
         
-        ctk.CTkLabel(
-            self.scramble_content_frame,
-            text="Unscramble this word:",
-            font=(self.font, 16)
-        ).pack(pady=10)
+        ctk.CTkLabel( category_frame, text=f"Category: {self.current_category}", font=(self.font, 22, "bold"), 
+                     text_color="#ecf0f1", padx=20, pady=10
+        ).pack()
         
-        self.scrambled_label = ctk.CTkLabel(
-            self.scramble_content_frame,
-            text=self.scrambled_word,
-            font=(self.font, 36, "bold"),
-            text_color="#FFD700"
+        # Instructions with subtle styling
+        ctk.CTkLabel( self.scramble_content_frame, text="Unscramble this word:", font=(self.font, 18), text_color=("#e0e0e0", "#c0c0c0")
+        ).pack(pady=(20, 10))
+        
+        # Scrambled word with visual emphasis
+        word_frame = ctk.CTkFrame( self.scramble_content_frame, fg_color=("#191930", "#0d0d1a"), corner_radius=15, 
+                                  border_width=1, border_color=("#3d3d5c", "#1f1f2e"))
+        word_frame.pack(pady=15, ipadx=30, ipady=15)
+        
+        self.scrambled_label = ctk.CTkLabel( word_frame, text=self.scrambled_word, font=(self.font, 46, "bold"), text_color=("#FFD700", "#FFA500")
         )
-        self.scrambled_label.pack(pady=20)
+        self.scrambled_label.pack(pady=10)
         
-        # Input field
-        self.answer_entry = ctk.CTkEntry(
-            self.scramble_content_frame,
-            placeholder_text="Type your answer here...",
-            font=(self.font, 18),
-            width=300,
-            height=40
-        )
-        self.answer_entry.pack(pady=20)
+        # Input field with modern styling
+        entry_frame = ctk.CTkFrame(self.scramble_content_frame, fg_color="transparent")
+        entry_frame.pack(pady=30)
+        
+        self.answer_entry = ctk.CTkEntry( entry_frame, placeholder_text="Type your answer here...", font=(self.font, 20), width=350, 
+                                         height=50, corner_radius=15, border_width=2, border_color=("#3d3d5c", "#1f1f2e"))
+        self.answer_entry.pack()
         self.answer_entry.bind("<Return>", lambda e: self.check_scramble_answer())
         
-        # Buttons frame
-        buttons_frame = ctk.CTkFrame(self.scramble_content_frame)
-        buttons_frame.pack(pady=20)
+        # Buttons frame with spacing
+        buttons_frame = ctk.CTkFrame(self.scramble_content_frame, fg_color="transparent")
+        buttons_frame.pack(pady=25)
         
-        submit_btn = ctk.CTkButton(
-            buttons_frame,
-            text="✅ Submit",
-            command=self.check_scramble_answer,
-            font=(self.font, 16, "bold"),
-            fg_color="#4CAF50",
-            hover_color="#45a049"
+        # Submit button with glow effect
+        submit_btn = ctk.CTkButton( buttons_frame, text="✅ Submit", command=self.check_scramble_answer, font=(self.font, 18, "bold"), 
+                                   width=130, height=45, fg_color="#4CAF50", hover_color="#45a049", corner_radius=15)
+        submit_btn.pack(side="left", padx=12)
+
+        # Hint button
+        hint_btn = ctk.CTkButton( buttons_frame, text="💡 Hint", command=self.show_hint, font=(self.font, 18, "bold"), 
+                                 width=130, height=45, fg_color="#FF9800", hover_color="#F57C00", corner_radius=15)
+        hint_btn.pack(side="left", padx=12)
+
+        # Skip button
+        skip_btn = ctk.CTkButton( buttons_frame, text="⏭️ Skip", command=self.next_scramble_word, font=(self.font, 18, "bold"), 
+                                 width=130, height=45, fg_color="#757575", hover_color="#616161", corner_radius=15)
+        skip_btn.pack(side="left", padx=12)
+        
+        # Feedback label with enhanced visibility
+        self.feedback_label = ctk.CTkLabel(
+            self.scramble_content_frame, 
+            text="", 
+            font=(self.font, 20, "bold"),
+            corner_radius=10
         )
-        submit_btn.pack(side="left", padx=10)
-        
-        hint_btn = ctk.CTkButton(
-            buttons_frame,
-            text="💡 Hint",
-            command=self.show_hint,
-            font=(self.font, 16, "bold"),
-            fg_color="#FF9800",
-            hover_color="#F57C00"
-        )
-        hint_btn.pack(side="left", padx=10)
-        
-        skip_btn = ctk.CTkButton(
-            buttons_frame,
-            text="⏭️ Skip",
-            command=self.next_scramble_word,
-            font=(self.font, 16, "bold"),
-            fg_color="#757575",
-            hover_color="#616161"
-        )
-        skip_btn.pack(side="left", padx=10)
-        
-        # Feedback label
-        self.feedback_label = ctk.CTkLabel(self.scramble_content_frame, text="", font=(self.font, 16))
-        self.feedback_label.pack(pady=20)
+        self.feedback_label.pack(pady=25)
         
         # Focus on entry
         self.answer_entry.focus()
-    
+
     def scramble_word(self, word):
         """Scramble the letters of a word"""
         letters = list(word)
         random.shuffle(letters)
         scrambled = ''.join(letters)
-        # Make sure it's actually scrambled
-        if scrambled == word and len(word) > 1:
-            return self.scramble_word(word)
         return scrambled
     
     def check_scramble_answer(self):
@@ -413,134 +353,115 @@ class WordverseGame:
         if hasattr(self, 'game_score_label'):
             self.game_score_label.configure(text=f"Score: {self.current_score}")
     
-    def start_sentence_builder(self):
-        """Start the Sentence Builder game"""
-        self.current_game_mode = "sentence"
-        self.setup_sentence_builder()
-    
     def setup_sentence_builder(self):
         """Setup Sentence Builder game interface"""
         # Clear main window
         for widget in self.root.winfo_children():
             widget.destroy()
         
-        # Game frame
-        self.game_frame = ctk.CTkFrame(self.root, corner_radius=0)
+        # Game frame with gradient background
+        self.game_frame = ctk.CTkFrame(self.root, corner_radius=0, fg_color=("#1a1a2e", "#0f0f1a"))
         self.game_frame.pack(fill="both", expand=True)
         
-        # Header
-        header_frame = ctk.CTkFrame(self.game_frame)
-        header_frame.pack(fill="x", padx=20, pady=10)
+        # Header with modern styling
+        header_frame = ctk.CTkFrame(self.game_frame, fg_color=("#1A1A2E", "#0F111A"), corner_radius=15)
+        header_frame.pack(fill="x", padx=30, pady=(20, 10))
 
-        ctk.CTkLabel(header_frame, text="📖 Sentence Builder", font=(self.font, 32, "bold")).pack(side="left", padx=20, pady=10)
+        ctk.CTkLabel( header_frame,  text="📖 Sentence Builder",  font=(self.font, 38, "bold"), text_color=("#4ECDC4", "#3BB5AD")
+        ).pack(side="left", padx=20, pady=10)
 
-        self.game_score_label = ctk.CTkLabel(header_frame, text=f"Score: {self.current_score}", font=(self.font, 16))
+        self.game_score_label = ctk.CTkLabel( header_frame,  text=f"Score: {self.current_score}",  font=(self.font, 20, "bold"), text_color=("#4ecca3", "#2c9c7a")
+        )
         self.game_score_label.pack(side="right", padx=20, pady=10)
         
-        # Back button
-        back_btn = ctk.CTkButton(header_frame, text="🏠 Home", command=self.setup_main_window, width=80)
-        back_btn.pack(side="right", padx=10, pady=10)
+        # Stylish back button
+        back_btn = ctk.CTkButton( header_frame,   text="🏠 Home",   command=self.setup_main_window, width=100, height=40, 
+                                 corner_radius=15, font=(self.font, 16, "bold"), fg_color="#5352ed", hover_color="#3742fa", border_width=2, border_color="#2c3e50"
+        )
+        back_btn.pack(side="right", padx=15, pady=10)
         
-        # Game content
-        self.sentence_content_frame = ctk.CTkFrame(self.game_frame)
-        self.sentence_content_frame.pack(expand=True, fill="both", padx=40, pady=20)
+        # Game content with shadow effect
+        self.sentence_content_frame = ctk.CTkFrame( self.game_frame, corner_radius=20, border_width=2,
+                                                   border_color=("#3d3d5c", "#1f1f2e"), fg_color=("#2d2d44", "#16162b")
+        )
+        self.sentence_content_frame.pack(expand=True, fill="both", padx=60, pady=(20, 40), ipadx=20, ipady=20)
         
         # Select random sentence
         self.current_sentence_data = random.choice(self.sentences)
         self.sentence_words = self.current_sentence_data["scrambled"].copy()
         random.shuffle(self.sentence_words)
         
-        # Instructions
-        ctk.CTkLabel(
-            self.sentence_content_frame,
-            text="Arrange the words to form a correct sentence:",
-            font=(self.font, 18, "bold")
+        # Instructions with subtle styling
+        ctk.CTkLabel( self.sentence_content_frame, text="Arrange the words to form a correct sentence:", font=(self.font, 22, "bold"), text_color=("#e0e0e0", "#c0c0c0")
         ).pack(pady=20)
         
-        # Word buttons frame
-        self.words_frame = ctk.CTkFrame(self.sentence_content_frame)
-        self.words_frame.pack(pady=20)
+        # Word buttons frame with visual distinction
+        self.words_frame = ctk.CTkFrame( self.sentence_content_frame, fg_color=("#222236", "#121220"), corner_radius=15, border_width=1, border_color=("#3d3d5c", "#1f1f2e")
+        )
+        self.words_frame.pack(pady=20, padx=40, fill="x")
         
-        # Selected words frame
-        ctk.CTkLabel(
-            self.sentence_content_frame,
-            text="Your sentence:",
-            font=(self.font, 16, "bold")
+        # Selected words section with improved visibility
+        ctk.CTkLabel( self.sentence_content_frame, text="Your sentence:", font=(self.font, 20, "bold"), text_color=("#B8C0FF", "#96BAFF")
         ).pack(pady=(30, 10))
         
-        self.selected_frame = ctk.CTkFrame(self.sentence_content_frame)
-        self.selected_frame.pack(pady=10)
+        # Selected words frame with enhanced styling
+        self.selected_frame = ctk.CTkFrame( self.sentence_content_frame, fg_color=("#222236", "#121220"), corner_radius=15, border_width=1, 
+                                           border_color=("#4ECDC4", "#3BB5AD")
+        )
+        self.selected_frame.pack(pady=15, padx=40, fill="x", ipady=10)
         
         # Initialize word selection
         self.selected_words = []
         self.create_word_buttons()
         self.update_selected_display()
         
-        # Control buttons
-        control_frame = ctk.CTkFrame(self.sentence_content_frame)
+        # Control buttons with improved styling
+        control_frame = ctk.CTkFrame(self.sentence_content_frame, fg_color="transparent")
         control_frame.pack(pady=30)
         
-        submit_btn = ctk.CTkButton(
-            control_frame,
-            text="✅ Check Sentence",
-            command=self.check_sentence,
-            font=(self.font, 16, "bold"),
-            fg_color="#4CAF50",
-            hover_color="#45a049"
+        submit_btn = ctk.CTkButton( control_frame, text="✅ Check Sentence", command=self.check_sentence, font=(self.font, 18, "bold"), 
+                                   fg_color="#4CAF50", hover_color="#45a049", width=180, height=50, corner_radius=12, border_width=2, border_color="#2d6a4f"
         )
-        submit_btn.pack(side="left", padx=10)
+        submit_btn.pack(side="left", padx=12)
         
-        clear_btn = ctk.CTkButton(
-            control_frame,
-            text="🔄 Clear",
-            command=self.clear_sentence,
-            font=(self.font, 16, "bold"),
-            fg_color="#FF9800",
-            hover_color="#F57C00"
+        clear_btn = ctk.CTkButton( control_frame, text="🔄 Clear", command=self.clear_sentence, font=(self.font, 18, "bold"), 
+                                  fg_color="#FF9800", hover_color="#F57C00", width=120, height=50, corner_radius=12, border_width=2, border_color="#b35900"
         )
-        clear_btn.pack(side="left", padx=10)
-        
-        skip_btn = ctk.CTkButton(
-            control_frame,
-            text="⏭️ Skip",
-            command=self.next_sentence,
-            font=(self.font, 16, "bold"),
-            fg_color="#757575",
-            hover_color="#616161"
+        clear_btn.pack(side="left", padx=12)
+
+        skip_btn = ctk.CTkButton( control_frame, text="⏭️ Skip", command=self.next_sentence, font=(self.font, 18, "bold"), 
+                                 fg_color="#757575", hover_color="#616161", width=120, height=50, corner_radius=12, border_width=2, border_color="#424242"
         )
-        skip_btn.pack(side="left", padx=10)
-        
-        # Feedback label
-        self.sentence_feedback_label = ctk.CTkLabel(self.sentence_content_frame, text="", font=(self.font, 16))
+        skip_btn.pack(side="left", padx=12)
+
+        # Feedback label with enhanced visibility
+        self.sentence_feedback_label = ctk.CTkLabel( self.sentence_content_frame, text="", font=(self.font, 18, "bold"), height=60, corner_radius=10
+        )
         self.sentence_feedback_label.pack(pady=20)
-    
+
     def create_word_buttons(self):
         """Create clickable word buttons"""
         # Clear existing buttons
         for widget in self.words_frame.winfo_children():
             widget.destroy()
         
+        # Calculate button dimensions based on word length
         for i, word in enumerate(self.sentence_words):
             if word not in self.selected_words:
-                btn = ctk.CTkButton(
-                    self.words_frame,
-                    text=word,
-                    command=lambda w=word: self.select_word(w),
-                    width=100,
-                    height=40,
-                    font=(self.font, 14)
-                )
+                btn = ctk.CTkButton( self.words_frame, text=word, command=lambda w=word: self.select_word(w), width=max(100, len(word) * 12),
+                                    height=45, font=(self.font, 16, "bold"), fg_color="#2196F3", hover_color="#1976D2", corner_radius=10,
+                                    border_width=1, border_color="#1565C0")
                 row = i // 3
                 col = i % 3
-                btn.grid(row=row, column=col, padx=5, pady=5)
-    
+                btn.grid(row=row, column=col, padx=10, pady=10, sticky="ew")
+
     def select_word(self, word):
         """Select a word for the sentence"""
         if word not in self.selected_words:
             self.selected_words.append(word)
             self.create_word_buttons()
             self.update_selected_display()
-    
+
     def update_selected_display(self):
         """Update the display of selected words"""
         # Clear existing display
@@ -551,36 +472,34 @@ class WordverseGame:
             ctk.CTkLabel(
                 self.selected_frame,
                 text="(Select words above)",
-                font=(self.font, 14),
-                text_color="gray"
-            ).pack(pady=10)
+                font=(self.font, 16, "italic"),
+                text_color=("#757575", "#9E9E9E")
+            ).pack(pady=20)
             return
         
         # Create sentence display with clickable words
-        sentence_frame = ctk.CTkFrame(self.selected_frame)
-        sentence_frame.pack(pady=10)
+        sentence_frame = ctk.CTkFrame(
+            self.selected_frame,
+            fg_color="transparent"
+        )
+        sentence_frame.pack(pady=15)
         
         for i, word in enumerate(self.selected_words):
-            word_btn = ctk.CTkButton(
-                sentence_frame,
-                text=word,
-                command=lambda w=word: self.remove_word(w),
-                width=len(word) * 10 + 20,
-                height=30,
-                font=(self.font, 12),
-                fg_color="#2196F3",
-                hover_color="#1976D2"
+            word_btn = ctk.CTkButton( sentence_frame, text=word, command=lambda w=word: self.remove_word(w), 
+                                     width=max(80, len(word) * 10 + 20), height=40, font=(self.font, 14, "bold"), 
+                                     fg_color="#3498db", hover_color="#2980b9", corner_radius=8, border_width=1, border_color="#1F618D"
             )
-            word_btn.pack(side="left", padx=2)
+            word_btn.pack(side="left", padx=3)
         
-        # Show current sentence
+        # Show current sentence with enhanced styling
         current_sentence = " ".join(self.selected_words)
         ctk.CTkLabel(
             self.selected_frame,
             text=f'"{current_sentence}"',
-            font=(self.font, 16),
-            wraplength=600
-        ).pack(pady=10)
+            font=(self.font, 18),
+            wraplength=700,
+            text_color=("#FFD700", "#FFC107")
+        ).pack(pady=15)
     
     def remove_word(self, word):
         """Remove a word from selected words"""
@@ -637,11 +556,6 @@ class WordverseGame:
         self.update_selected_display()
         self.sentence_feedback_label.configure(text="")
     
-    def start_subject_quiz(self):
-        """Start the Subject Quiz game"""
-        self.current_game_mode = "quiz"
-        self.setup_subject_quiz()
-    
     def setup_subject_quiz(self):
         """Setup Subject Quiz game interface"""
         # Clear main window
@@ -690,43 +604,19 @@ class WordverseGame:
         self.selected_option = tk.IntVar(value=-1)
         
         for i, option in enumerate(self.current_question["options"]):
-            btn = ctk.CTkButton(
-                self.options_frame,
-                text=f"{chr(65+i)}. {option}",
-                command=lambda idx=i: self.select_quiz_option(idx),
-                width=400,
-                height=50,
-                font=(self.font, 16),
-                fg_color="#2196F3",
-                hover_color="#1976D2"
-            )
+            btn = ctk.CTkButton( self.options_frame, text=f"{chr(65+i)}. {option}", command=lambda idx=i: self.select_quiz_option(idx), 
+                                width=400, height=50, font=(self.font, 16), fg_color="#2196F3", hover_color="#1976D2")
             btn.pack(pady=10)
             self.option_buttons.append(btn)
         
         # Submit button
-        self.quiz_submit_btn = ctk.CTkButton(
-            self.quiz_content_frame,
-            text="✅ Submit Answer",
-            command=self.check_quiz_answer,
-            font=(self.font, 18, "bold"),
-            fg_color="#4CAF50",
-            hover_color="#45a049",
-            width=200,
-            height=50
-        )
+        self.quiz_submit_btn = ctk.CTkButton(self.quiz_content_frame,text="✅ Submit Answer",command=self.check_quiz_answer,font=(self.font, 18, "bold"),
+                                             fg_color="#4CAF50",hover_color="#45a049",width=200,height=50)
         self.quiz_submit_btn.pack(pady=30)
         
         # Next question button (initially hidden)
-        self.next_quiz_btn = ctk.CTkButton(
-            self.quiz_content_frame,
-            text="➡️ Next Question",
-            command=self.next_quiz_question,
-            font=(self.font, 16, "bold"),
-            fg_color="#FF9800",
-            hover_color="#F57C00",
-            width=200,
-            height=40
-        )
+        self.next_quiz_btn = ctk.CTkButton(self.quiz_content_frame,text="➡️ Next Question",command=self.next_quiz_question,font=(self.font, 16, "bold") , 
+                                           fg_color="#FF9800",hover_color="#F57C00",width=200,height=40)
         
         # Feedback label
         self.quiz_feedback_label = ctk.CTkLabel(self.quiz_content_frame, text="", font=(self.font, 16))
@@ -797,23 +687,13 @@ class WordverseGame:
         
         # Update option buttons
         for i, btn in enumerate(self.option_buttons):
-            btn.configure(
-                text=f"{chr(65+i)}. {self.current_question['options'][i]}",
-                fg_color="#2196F3",
-                hover_color="#1976D2",
-                text_color="#FFFFFF",
-                state="normal"
-            )
+            btn.configure( text=f"{chr(65+i)}. {self.current_question['options'][i]}", fg_color="#2196F3",
+                          hover_color="#1976D2", text_color="#FFFFFF", state="normal")
         
         # Reset UI
         self.quiz_feedback_label.configure(text="")
         self.next_quiz_btn.pack_forget()
         self.quiz_submit_btn.pack(pady=30)
-    
-    def start_word_match(self):
-        """Start the Word Match game"""
-        self.current_game_mode = "match"
-        self.setup_word_match()
     
     def setup_word_match(self):
         """Setup Word Match game interface"""
@@ -821,41 +701,57 @@ class WordverseGame:
         for widget in self.root.winfo_children():
             widget.destroy()
         
-        # Game frame
-        self.game_frame = ctk.CTkFrame(self.root, corner_radius=0)
+        # Game frame with gradient background
+        self.game_frame = ctk.CTkFrame(self.root, corner_radius=0, fg_color=("#1a1a2e", "#0f0f1a"))
         self.game_frame.pack(fill="both", expand=True)
         
-        # Header
-        header_frame = ctk.CTkFrame(self.game_frame)
-        header_frame.pack(fill="x", padx=20, pady=10)
+        # Header with modern styling
+        header_frame = ctk.CTkFrame(self.game_frame, fg_color=("#1A1A2E", "#0F111A"), corner_radius=15)
+        header_frame.pack(fill="x", padx=30, pady=(20, 10))
 
-        ctk.CTkLabel(header_frame, text="🔀 Word Match", font=(self.font, 32, "bold")).pack(side="left", padx=20, pady=10)
+        ctk.CTkLabel(
+            header_frame, 
+            text="🔀 Word Match Challenge", 
+            font=(self.font, 38, "bold"),
+            text_color=("#96CEB4", "#7FB89A")
+        ).pack(side="left", padx=20, pady=10)
 
-        self.game_score_label = ctk.CTkLabel(header_frame, text=f"Score: {self.current_score}", font=(self.font, 16))
+        self.game_score_label = ctk.CTkLabel(
+            header_frame, 
+            text=f"Score: {self.current_score}", 
+            font=(self.font, 20, "bold"),
+            text_color=("#4ecca3", "#2c9c7a")
+        )
         self.game_score_label.pack(side="right", padx=20, pady=10)
         
-        # Back button
-        back_btn = ctk.CTkButton(header_frame, text="🏠 Home", command=self.setup_main_window, width=80)
-        back_btn.pack(side="right", padx=10, pady=10)
+        # Stylish back button
+        back_btn = ctk.CTkButton( header_frame,  text="🏠 Home",  command=self.setup_main_window,  width=100, 
+                                 height=40, corner_radius=15, font=(self.font, 16, "bold"), fg_color="#5352ed", hover_color="#3742fa",
+                                 border_width=2, border_color="#2c3e50"
+        )
+        back_btn.pack(side="right", padx=15, pady=10)
         
-        # Game content
-        self.match_content_frame = ctk.CTkFrame(self.game_frame)
-        self.match_content_frame.pack(expand=True, fill="both", padx=40, pady=20)
+        # Game content with shadow effect
+        self.match_content_frame = ctk.CTkFrame( self.game_frame,  corner_radius=20,  border_width=2, 
+                                                border_color=("#3d3d5c", "#1f1f2e"),  fg_color=("#2d2d44", "#16162b")
+        )
+        self.match_content_frame.pack(expand=True, fill="both", padx=60, pady=(20, 40), ipadx=20, ipady=20)
         
-        # Instructions
+        # Instructions with enhanced styling
         ctk.CTkLabel(
             self.match_content_frame,
-            text="Drag words to their correct subject categories:",
-            font=(self.font, 18, "bold")
-        ).pack(pady=20)
+            text="Match words to their correct subject categories:",
+            font=(self.font, 22, "bold"),
+            text_color=("#e0e0e0", "#c0c0c0")
+        ).pack(pady=(20, 30))
         
         # Create match interface
         self.setup_word_match_interface()
-    
+
     def setup_word_match_interface(self):
         """Setup the word matching interface"""
         # Categories frame
-        self.categories_frame = ctk.CTkFrame(self.match_content_frame)
+        self.categories_frame = ctk.CTkFrame(self.match_content_frame, fg_color="transparent")
         self.categories_frame.pack(fill="x", pady=20)
         
         # Create category boxes
@@ -863,21 +759,28 @@ class WordverseGame:
         self.category_words = {cat: [] for cat in self.word_match_data.keys()}
         
         category_icons = {"Science": "🔬", "Geography": "🌍", "History": "🏛️", "Math": "🔢"}
+        category_colors = {
+            "Science": ("#3498db", "#2980b9"),
+            "Geography": ("#2ecc71", "#27ae60"),
+            "History": ("#e74c3c", "#c0392b"),
+            "Math": ("#9b59b6", "#8e44ad")
+        }
         
         for i, (category, icon) in enumerate(category_icons.items()):
-            cat_frame = ctk.CTkFrame(self.categories_frame)
-            cat_frame.grid(row=0, column=i, padx=10, pady=10, sticky="ew")
+            cat_frame = ctk.CTkFrame( self.categories_frame,  corner_radius=15, border_width=2,
+                                     border_color=("#3d3d5c", "#1f1f2e"), fg_color=("#2d2d44", "#16162b")
+            )
+            cat_frame.grid(row=0, column=i, padx=15, pady=10, sticky="ew")
             
-            # Category header
-            ctk.CTkLabel(
-                cat_frame,
-                text=f"{icon} {category}",
-                font=(self.font, 16, "bold")
-            ).pack(pady=10)
+            # Category header with icon
+            ctk.CTkLabel( cat_frame, text=f"{icon} {category}", font=(self.font, 18, "bold"), text_color=category_colors[category][0]
+            ).pack(pady=(15, 10))
             
-            # Drop zone
-            drop_zone = ctk.CTkFrame(cat_frame, height=200, width=200)
-            drop_zone.pack(padx=10, pady=10, fill="both", expand=True)
+            # Drop zone with distinct styling
+            drop_zone = ctk.CTkFrame( cat_frame,  height=220,  width=220,  corner_radius=10, border_width=2,
+                                     border_color=category_colors[category][0], fg_color=("#222236", "#121220")
+            )
+            drop_zone.pack(padx=10, pady=(5, 15), fill="both", expand=True)
             drop_zone.pack_propagate(False)
             
             self.category_boxes[category] = drop_zone
@@ -886,49 +789,36 @@ class WordverseGame:
         for i in range(4):
             self.categories_frame.grid_columnconfigure(i, weight=1)
         
-        # Words frame
-        self.words_match_frame = ctk.CTkFrame(self.match_content_frame)
-        self.words_match_frame.pack(pady=20)
+        # Words frame with enhanced styling
+        self.words_match_frame = ctk.CTkFrame(
+            self.match_content_frame, 
+            corner_radius=15,
+            fg_color=("#2d2d44", "#16162b")
+        )
+        self.words_match_frame.pack(pady=(30, 20), fill="x", padx=30)
         
-        # Create word buttons (simplified drag-drop using buttons)
+        # Create word buttons
         self.create_match_words()
         
-        # Control buttons
-        control_frame = ctk.CTkFrame(self.match_content_frame)
-        control_frame.pack(pady=20)
+        # Control buttons with visual enhancements
+        control_frame = ctk.CTkFrame(self.match_content_frame, fg_color="transparent")
+        control_frame.pack(pady=(20, 15))
         
-        check_btn = ctk.CTkButton(
-            control_frame,
-            text="✅ Check Matches",
-            command=self.check_word_matches,
-            font=(self.font, 16, "bold"),
-            fg_color="#4CAF50",
-            hover_color="#45a049"
-        )
-        check_btn.pack(side="left", padx=10)
+        check_btn = ctk.CTkButton( control_frame,  text="✅ Check Matches",  command=self.check_word_matches, 
+                                  font=(self.font, 18, "bold"),  fg_color="#4CAF50",  hover_color="#45a049", height=45, width=160, corner_radius=12, 
+                                  border_width=2, border_color="#2d6a4f" )
+        check_btn.pack(side="left", padx=15)
         
-        reset_btn = ctk.CTkButton(
-            control_frame,
-            text="🔄 Reset",
-            command=self.reset_word_match,
-            font=(self.font, 16, "bold"),
-            fg_color="#FF9800",
-            hover_color="#F57C00"
-        )
-        reset_btn.pack(side="left", padx=10)
+        reset_btn = ctk.CTkButton( control_frame,  text="🔄 Reset",  command=self.reset_word_match,  font=(self.font, 18, "bold"), 
+                                  fg_color="#FF9800",  hover_color="#F57C00", height=45, width=130, corner_radius=12, border_width=2, border_color="#b35900" )
+        reset_btn.pack(side="left", padx=15)
         
-        new_round_btn = ctk.CTkButton(
-            control_frame,
-            text="🎲 New Round",
-            command=self.new_match_round,
-            font=(self.font, 16, "bold"),
-            fg_color="#9C27B0",
-            hover_color="#7B1FA2"
-        )
-        new_round_btn.pack(side="left", padx=10)
+        new_round_btn = ctk.CTkButton( control_frame,  text="🎲 New Round",  command=self.new_match_round, font=(self.font, 18, "bold"),  
+                                      fg_color="#9C27B0",  hover_color="#7B1FA2", height=45, width=150, corner_radius=12, border_width=2, border_color="#691b9a")
+        new_round_btn.pack(side="left", padx=15)
         
-        # Feedback label
-        self.match_feedback_label = ctk.CTkLabel(self.match_content_frame, text="", font=(self.font, 16))
+        # Feedback label with scroll effect
+        self.match_feedback_label = ctk.CTkLabel( self.match_content_frame,  text="",  font=(self.font, 16, "bold"), wraplength=700, corner_radius=10, height=80 )
         self.match_feedback_label.pack(pady=20)
         
         # Selected word tracking
@@ -962,14 +852,8 @@ class WordverseGame:
         words_grid.pack(pady=10)
         
         for i, (word, category) in enumerate(all_words):
-            btn = ctk.CTkButton(
-                words_grid,
-                text=word,
-                command=lambda w=word, c=category: self.select_word_for_match(w, c),
-                width=120,
-                height=40,
-                font=(self.font, 14)
-            )
+            btn = ctk.CTkButton( words_grid, text=word, command=lambda w=word, c=category: self.select_word_for_match(w, c), 
+                                width=120, height=40, font=(self.font, 14))
             row = i // 4
             col = i % 4
             btn.grid(row=row, column=col, padx=5, pady=5)
@@ -989,24 +873,13 @@ class WordverseGame:
         cat_btn_frame.pack(pady=10)
         
         for i, category in enumerate(self.word_match_data.keys()):
-            btn = ctk.CTkButton(
-                cat_btn_frame,
-                text=category,
-                command=lambda c=category: self.assign_word_to_category(c),
-                width=100,
-                height=35,
-                font=(self.font, 12),
-                state="disabled"
-            )
+            btn = ctk.CTkButton( cat_btn_frame, text=category, command=lambda c=category: self.assign_word_to_category(c), 
+                                width=100, height=35, font=(self.font, 12), state="disabled")
             btn.grid(row=0, column=i, padx=5)
             self.category_buttons[category] = btn
         
         # Current selection display
-        self.selection_label = ctk.CTkLabel(
-            self.category_selection_frame,
-            text="No word selected",
-            font=(self.font, 12),
-            text_color="gray"
+        self.selection_label = ctk.CTkLabel( self.category_selection_frame, text="No word selected", font=(self.font, 12), text_color="gray"
         )
         self.selection_label.pack(pady=10)
     
@@ -1064,15 +937,9 @@ class WordverseGame:
         
         # Add word labels
         for word in self.category_words[category]:
-            word_label = ctk.CTkLabel(
-                drop_zone,
-                text=word,
-                font=(self.font, 12),
-                fg_color="#2196F3",
-                corner_radius=5
-            )
+            word_label = ctk.CTkLabel( drop_zone, text=word, font=(self.font, 12), fg_color="#2196F3", corner_radius=5 )
             word_label.pack(pady=2, padx=5, fill="x")
-    
+
     def remove_word_from_available(self, word_to_remove):
         """Remove a word from the available words display"""
         for widget in self.words_match_frame.winfo_children():
