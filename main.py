@@ -389,20 +389,20 @@ class WordverseGame:
         self.sentence_words = self.current_sentence_data["scrambled"].copy()
         random.shuffle(self.sentence_words)
         
-        # Instructions with subtle styling
+        # Instructions 
         ctk.CTkLabel( self.sentence_content_frame, text="Arrange the words to form a correct sentence:", font=(self.font, 22, "bold"), text_color=("#e0e0e0", "#c0c0c0")
         ).pack(pady=20)
         
-        # Word buttons frame with visual distinction
+        # Word buttons frame
         self.words_frame = ctk.CTkFrame( self.sentence_content_frame, fg_color=("#222236", "#121220"), corner_radius=15, border_width=1, border_color=("#3d3d5c", "#1f1f2e")
         )
         self.words_frame.pack(pady=20, padx=40, fill="x")
-        
-        # Selected words section with improved visibility
+
+        # Selected words section
         ctk.CTkLabel( self.sentence_content_frame, text="Your sentence:", font=(self.font, 20, "bold"), text_color=("#B8C0FF", "#96BAFF")
         ).pack(pady=(30, 10))
-        
-        # Selected words frame with enhanced styling
+
+        # Selected words frame
         self.selected_frame = ctk.CTkFrame( self.sentence_content_frame, fg_color=("#222236", "#121220"), corner_radius=15, border_width=1, 
                                            border_color=("#4ECDC4", "#3BB5AD")
         )

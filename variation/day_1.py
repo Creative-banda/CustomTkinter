@@ -2,7 +2,6 @@
 # This code creates a main menu UI for a word-based game using CustomTkinter.
 # We will implement a visually appealing landing page with with 4 game modes.
 
-
 import customtkinter as ctk
 
 # Set CustomTkinter appearance
@@ -24,10 +23,9 @@ class WordverseGame:
         self.current_score = 0
         self.streak_count = 0
         self.font = "Chewy"
-
-        # Initialize UI
-        self.setup_main_window()
+        self.setup_main_window()  # Initialize the main window
         
+    # Initialize UI
     def setup_main_window(self):
         """Create the main landing page with enhanced visual appeal"""
         # Clear window
@@ -93,46 +91,37 @@ class WordverseGame:
         self.create_game_buttons()
         
         # Exit button
-        self.exit_button = ctk.CTkButton(
-            self.main_frame,
-            text="Exit Game",
-            font=(self.font, 16),
-            fg_color="#B91646",
-            hover_color="#A21441",
-            width=120,
-            height=40,
-            corner_radius=10,
-            command=self.root.destroy
-        )
+        self.exit_button = ctk.CTkButton( self.main_frame, text="Exit Game", font=(self.font, 16), fg_color="#B91646",
+                                         hover_color="#A21441", width=120, height=40, corner_radius=10, command=self.root.destroy )
         self.exit_button.pack(pady=(10, 30))
-        
+            
     def create_game_buttons(self):
-        """Create animated game mode selection buttons"""
-        button_configs = [
-            {"text": "🧩 Word Scramble", "color": "#FF6B6B"},
-            {"text": "📖 Sentence Builder", "color": "#4ECDC4"},
-            {"text": "❓ Subject Quiz", "color": "#45B7D1"},
-            {"text": "🔀 Word Match", "color": "#96CEB4"}
-        ]
-        
-        for i, config in enumerate(button_configs):
-            btn = ctk.CTkButton(
-                self.buttons_frame,
-                text=config["text"],
-                width=250,
-                height=100,
-                font=(self.font, 18, "bold"),
-                fg_color=config["color"],
-                hover_color=self.darken_color(config["color"]),
-                corner_radius=20,
-            )
-            row = i // 2
-            col = i % 2
-            btn.grid(row=row, column=col, padx=20, pady=20, sticky="ew")
-        
-        # Configure grid weights
-        self.buttons_frame.grid_columnconfigure(0, weight=1)
-        self.buttons_frame.grid_columnconfigure(1, weight=1)
+            """Create animated game mode selection buttons"""
+            button_configs = [
+                {"text": "🧩 Word Scramble", "color": "#FF6B6B"},
+                {"text": "📖 Sentence Builder", "color": "#4ECDC4"},
+                {"text": "❓ Subject Quiz", "color": "#45B7D1"},
+                {"text": "🔀 Word Match", "color": "#96CEB4"}
+            ]
+            
+            for i, config in enumerate(button_configs):
+                btn = ctk.CTkButton(
+                    self.buttons_frame,
+                    text=config["text"],
+                    width=250,
+                    height=100,
+                    font=(self.font, 18, "bold"),
+                    fg_color=config["color"],
+                    hover_color=self.darken_color(config["color"]),
+                    corner_radius=20,
+                )
+                row = i // 2
+                col = i % 2
+                btn.grid(row=row, column=col, padx=20, pady=20, sticky="ew")
+            
+            # Configure grid weights
+            self.buttons_frame.grid_columnconfigure(0, weight=1)
+            self.buttons_frame.grid_columnconfigure(1, weight=1)
     
     def darken_color(self, color):
         """Create a darker version of a color for hover effect"""
@@ -145,7 +134,6 @@ class WordverseGame:
         }
         return color_map.get(color, color)
     
-
 if __name__ == "__main__":
     game = WordverseGame()
     game.root.mainloop()
