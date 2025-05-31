@@ -215,10 +215,11 @@ class WordverseGame:
         category_frame = ctk.CTkFrame( self.scramble_content_frame,  fg_color="#2980b9", corner_radius=15)
         category_frame.pack(pady=(30, 20))
         
-        ctk.CTkLabel( category_frame, text=f"Category: {self.current_category}", font=(self.font, 22, "bold"), 
+        self.category = ctk.CTkLabel( category_frame, text=f"Category: {self.current_category}", font=(self.font, 22, "bold"), 
                      text_color="#ecf0f1", padx=20, pady=10
-        ).pack()
-        
+        )
+        self.category.pack()
+
         # Instructions with subtle styling
         ctk.CTkLabel( self.scramble_content_frame, text="Unscramble this word:", font=(self.font, 18), text_color=("#e0e0e0", "#c0c0c0")
         ).pack(pady=(20, 10))
@@ -324,17 +325,14 @@ class WordverseGame:
         self.current_category = random.choice(list(self.scramble_words.keys()))
         self.current_word = random.choice(self.scramble_words[self.current_category])
         self.scrambled_word = self.scramble_word(self.current_word)
-        
+                
         # Update display
         self.scrambled_label.configure(text=self.scrambled_word)
         self.answer_entry.delete(0, 'end')
         self.feedback_label.configure(text="")
         
         # Update category
-        for widget in self.scramble_content_frame.winfo_children():
-            if isinstance(widget, ctk.CTkLabel) and "Category:" in widget.cget("text"):
-                widget.configure(text=f"Category: {self.current_category}")
-                break
+        self.category.configure(text=f"Category: {self.current_category}")
     
     def animate_success(self):
         """Animate success feedback"""
