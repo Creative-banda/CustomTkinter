@@ -1,10 +1,9 @@
 import customtkinter as ctk
 import tkinter as tk
-from tkinter import messagebox
 import random
 import json
 
-
+ 
 # Set CustomTkinter appearance
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
@@ -163,8 +162,7 @@ class WordverseGame:
     
     def update_score_display(self):
         """Update the score display"""
-        if hasattr(self, 'score_label'):
-            self.score_label.configure(text=f"🏆 Total Score: {self.current_score} | 🔥 Streak: {self.streak_count}")
+        self.score_label.configure(text=f"🏆 Total Score: {self.current_score} | 🔥 Streak: {self.streak_count}")
     
     def setup_word_scramble(self):
         """Setup Word Scramble game interface"""
@@ -348,9 +346,8 @@ class WordverseGame:
     
     def update_game_score(self):
         """Update score display in game"""
-        if hasattr(self, 'game_score_label'):
-            self.game_score_label.configure(text=f"Score: {self.current_score}")
-    
+        self.game_score_label.configure(text=f"Score: {self.current_score}")
+
     def setup_sentence_builder(self):
         """Setup Sentence Builder game interface"""
         # Clear main window
@@ -467,12 +464,8 @@ class WordverseGame:
             widget.destroy()
         
         if not self.selected_words:
-            ctk.CTkLabel(
-                self.selected_frame,
-                text="(Select words above)",
-                font=(self.font, 16, "italic"),
-                text_color=("#757575", "#9E9E9E")
-            ).pack(pady=20)
+            ctk.CTkLabel( self.selected_frame, text="(Select words above)", font=(self.font, 16, "italic"),
+                         text_color=("#757575", "#9E9E9E") ).pack(pady=20)
             return
         
         # Create sentence display with clickable words
@@ -482,22 +475,17 @@ class WordverseGame:
         )
         sentence_frame.pack(pady=15)
         
-        for i, word in enumerate(self.selected_words):
+        for word in self.selected_words:
             word_btn = ctk.CTkButton( sentence_frame, text=word, command=lambda w=word: self.remove_word(w), 
                                      width=max(80, len(word) * 10 + 20), height=40, font=(self.font, 14, "bold"), 
                                      fg_color="#3498db", hover_color="#2980b9", corner_radius=8, border_width=1, border_color="#1F618D"
             )
             word_btn.pack(side="left", padx=3)
         
-        # Show current sentence with enhanced styling
+        # Show current sentence
         current_sentence = " ".join(self.selected_words)
-        ctk.CTkLabel(
-            self.selected_frame,
-            text=f'"{current_sentence}"',
-            font=(self.font, 18),
-            wraplength=700,
-            text_color=("#FFD700", "#FFC107")
-        ).pack(pady=15)
+        ctk.CTkLabel( self.selected_frame, text=f'"{current_sentence}"', font=(self.font, 18), wraplength=700,
+                     text_color=("#FFD700", "#FFC107") ).pack(pady=15)
     
     def remove_word(self, word):
         """Remove a word from selected words"""
@@ -564,7 +552,7 @@ class WordverseGame:
         self.game_frame = ctk.CTkFrame(self.root, corner_radius=0, fg_color=("#1a1a2e", "#0f0f1a"))
         self.game_frame.pack(fill="both", expand=True)
         
-        # Header with modern styling
+        # Header 
         header_frame = ctk.CTkFrame(self.game_frame, fg_color=("#1A1A2E", "#0F111A"), corner_radius=15)
         header_frame.pack(fill="x", padx=30, pady=(20, 10))
 
@@ -575,14 +563,14 @@ class WordverseGame:
         )
         self.game_score_label.pack(side="right", padx=20, pady=10)
         
-        # Stylish back button
+        # Back button
         back_btn = ctk.CTkButton( header_frame,  text="🏠 Home",  command=self.setup_main_window,  width=100, 
                                  height=40,  corner_radius=15,  font=(self.font, 16, "bold"),  fg_color="#5352ed",  
                                  hover_color="#3742fa", border_width=2,  border_color="#2c3e50"
         )
         back_btn.pack(side="right", padx=15, pady=10)
         
-        # Game content with shadow effect
+        # Game content 
         self.quiz_content_frame = ctk.CTkFrame( self.game_frame,  corner_radius=20,  border_width=2, border_color=("#3d3d5c", "#1f1f2e"),  fg_color=("#2d2d44", "#16162b")
         )
         self.quiz_content_frame.pack(expand=True, fill="both", padx=60, pady=(20, 40), ipadx=20, ipady=20)
@@ -590,13 +578,13 @@ class WordverseGame:
         # Select random question
         self.current_question = random.choice(self.quiz_questions)
         
-        # Question display with enhanced styling
+        # Question display
         self.question_label = ctk.CTkLabel( self.quiz_content_frame, text=self.current_question["question"], font=(self.font, 24, "bold"),
                                            wraplength=800, text_color=("#E0E0E0", "#C0C0C0")
         )
         self.question_label.pack(pady=30, padx=40)
         
-        # Options frame with visual distinction
+        # Options frame 
         self.options_frame = ctk.CTkFrame( self.quiz_content_frame,  fg_color=("#222236", "#121220"), corner_radius=15,  border_width=1,  border_color=("#3d3d5c", "#1f1f2e")
         )
         self.options_frame.pack(pady=20, padx=40, fill="x")
@@ -756,7 +744,7 @@ class WordverseGame:
         """Setup the word matching interface"""
         # Categories frame
         self.categories_frame = ctk.CTkFrame(self.match_content_frame, fg_color="transparent")
-        self.categories_frame.pack(fill="x", pady=20)
+        self.categories_frame.pack(fill="x", pady=10)
         
         # Create category boxes
         self.category_boxes = {}
@@ -764,27 +752,27 @@ class WordverseGame:
         
         category_icons = {"Science": "🔬", "Geography": "🌍", "History": "🏛️", "Math": "🔢"}
         category_colors = {
-            "Science": ("#3498db", "#2980b9"),
-            "Geography": ("#2ecc71", "#27ae60"),
-            "History": ("#e74c3c", "#c0392b"),
-            "Math": ("#9b59b6", "#8e44ad")
+            "Science": "#3498db",
+            "Geography": "#2ecc71",
+            "History": "#e74c3c",
+            "Math": "#9b59b6"
         }
         
         for i, (category, icon) in enumerate(category_icons.items()):
             cat_frame = ctk.CTkFrame( self.categories_frame,  corner_radius=15, border_width=2,
                                      border_color=("#3d3d5c", "#1f1f2e"), fg_color=("#2d2d44", "#16162b")
             )
-            cat_frame.grid(row=0, column=i, padx=15, pady=10, sticky="ew")
+            cat_frame.grid(row=0, column=i, padx=15, sticky="ew")
             
             # Category header with icon
-            ctk.CTkLabel( cat_frame, text=f"{icon} {category}", font=(self.font, 18, "bold"), text_color=category_colors[category][0]
+            ctk.CTkLabel( cat_frame, text=f"{icon} {category}", font=(self.font, 18, "bold"), text_color=category_colors[category]
             ).pack(pady=(15, 10))
             
             # Drop zone with distinct styling
             drop_zone = ctk.CTkFrame( cat_frame,  height=220,  width=220,  corner_radius=10, border_width=2,
-                                     border_color=category_colors[category][0], fg_color=("#222236", "#121220")
+                                     border_color=category_colors[category], fg_color=("#222236", "#121220")
             )
-            drop_zone.pack(padx=10, pady=(5, 15), fill="both", expand=True)
+            drop_zone.pack(padx=10, pady=(5, 5), fill="both", expand=True)
             drop_zone.pack_propagate(False)
             
             self.category_boxes[category] = drop_zone
@@ -799,14 +787,14 @@ class WordverseGame:
             corner_radius=15,
             fg_color=("#2d2d44", "#16162b")
         )
-        self.words_match_frame.pack(pady=(30, 20), fill="x", padx=30)
-        
+        self.words_match_frame.pack(pady=(5), fill="x", padx=30)
+
         # Create word buttons
         self.create_match_words()
         
         # Control buttons with visual enhancements
-        control_frame = ctk.CTkFrame(self.match_content_frame, fg_color="transparent")
-        control_frame.pack(pady=(20, 15))
+        control_frame = ctk.CTkFrame(self.match_content_frame, fg_color=("#222236", "#121220"), corner_radius=15)
+        control_frame.pack()
         
         check_btn = ctk.CTkButton( control_frame,  text="✅ Check Matches",  command=self.check_word_matches, 
                                   font=(self.font, 18, "bold"),  fg_color="#4CAF50",  hover_color="#45a049", height=45, width=160, corner_radius=12, 
@@ -823,7 +811,7 @@ class WordverseGame:
         
         # Feedback label with scroll effect
         self.match_feedback_label = ctk.CTkLabel( self.match_content_frame,  text="",  font=(self.font, 16, "bold"), wraplength=700, corner_radius=10, height=80 )
-        self.match_feedback_label.pack(pady=20)
+        self.match_feedback_label.pack()
         
         # Selected word tracking
         self.selected_word = None
@@ -850,7 +838,7 @@ class WordverseGame:
             self.words_match_frame,
             text="Available Words:",
             font=(self.font, 16, "bold")
-        ).pack(pady=10)
+        ).pack(pady=(0, 10))
         
         words_grid = ctk.CTkFrame(self.words_match_frame)
         words_grid.pack(pady=10)
@@ -974,9 +962,9 @@ class WordverseGame:
             for word in words:
                 if word in correct_category_words:
                     correct_matches += 1
-                    feedback_text += f"✅ {word} → {category}\n"
+                    feedback_text += f"✅ {word} → {category} "
                 else:
-                    feedback_text += f"❌ {word} → {category}\n"
+                    feedback_text += f"❌ {word} → {category} "
         
         # Calculate score
         if correct_matches == total_words and total_words > 0:
