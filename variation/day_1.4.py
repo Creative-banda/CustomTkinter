@@ -1,6 +1,6 @@
-# Day 1: Wordverse Game - Main Menu UI
-# This code creates a main menu UI for a word-based game using CustomTkinter.
-# We will implement a visually appealing landing page with with 4 game modes.
+# Day 1.4: Wordverse Game - Main Menu UI
+# In this Code Snippet, we will enhance the main menu UI buttons by adding hover effects,
+# We will understand how to use dictionaries to manage button configurations and what is the use of lambda functions in CustomTkinter.
 
 import customtkinter as ctk
 
@@ -20,8 +20,6 @@ class WordverseGame:
         # self.root.attributes("-topmost", True)
 
         # Game state variables
-        self.current_score = 0
-        self.streak_count = 0
         self.font = "Chewy"
         self.setup_main_window()  # Initialize the main window
         
@@ -110,6 +108,7 @@ class WordverseGame:
                     text=config["text"],
                     width=250,
                     height=100,
+                    command=lambda text=config["text"]: print(f"Selected: {text}"),
                     font=(self.font, 18, "bold"),
                     fg_color=config["color"],
                     hover_color=self.darken_color(config["color"]),

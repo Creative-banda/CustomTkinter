@@ -1,6 +1,6 @@
 {
-    "Science": [ "Telescope", "Microscope", "Gravity", "Photosynthesis" ],
-    "Geography": [ "Mountain", "Ocean", "Desert", "Forest" ],
-    "History": [ "Castle", "Knight", "Crown", "Battle" ],
-    "Math": [ "Addition", "Subtraction", "Fraction", "Geometry" ]
+    "Science": [ "Telescope", "Microscope", "Gravity", "Photosynthesis", "Molecule", "Asteroid", "Bacteria", "Cell", "Atomic" ],
+    "Geography": [ "Mountain", "Ocean", "Desert", "Forest", "Continent", "Equator", "Longitude", "Plateau" ],
+    "History": [ "Castle", "Knight", "Crown", "Battle", "Civilization", "Democracy", "Revolution", "Constitution" ],
+    "Math": [ "Addition", "Subtraction", "Fraction", "Geometry", "Algebra", "Calculus", "Statistics", "Probability" ]
 }

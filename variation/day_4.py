@@ -1,9 +1,10 @@
-# Day 3: Wordverse Game - Sentence Builder Mode
-# Today's task to add a Sentence Builder game mode
-# Again We use Json to store the data for the game
+# Day 4: Wordverse Game - Subject Quiz Game Mode
+# Today's task to add a Subject Quiz game mode
+# We will create a new game mode that allows users to answer questions from various subjects.
 
 import customtkinter as ctk
 import json
+import tkinter as tk
 import random
 
 # Set CustomTkinter appearance
@@ -39,6 +40,9 @@ class WordverseGame:
         
         # Sentence Builder data
         self.sentences = self.load_json("sentences.json")
+        
+        # Subject Quiz data
+        self.quiz_questions = self.load_json("quiz_questions.json")
   
     def load_json(self, file_name):
         try:
@@ -601,8 +605,150 @@ class WordverseGame:
         self.sentence_feedback_label.configure(text="")
     
     def setup_subject_quiz(self):
-        print("Setting up Subject Quiz...")
+        """Setup Subject Quiz game interface"""
+        # Clear main window
+        for widget in self.root.winfo_children():
+            widget.destroy()
+        
+        # Game frame with gradient background
+        self.game_frame = ctk.CTkFrame(self.root, corner_radius=0, fg_color=("#1a1a2e", "#0f0f1a"))
+        self.game_frame.pack(fill="both", expand=True)
+        
+        # Header 
+        header_frame = ctk.CTkFrame(self.game_frame, fg_color=("#1A1A2E", "#0F111A"), corner_radius=15)
+        header_frame.pack(fill="x", padx=30, pady=(20, 10))
 
+        ctk.CTkLabel( header_frame,  text="❓ Subject Quiz",  font=(self.font, 38, "bold"), text_color=("#45B7D1", "#3A9BC1")
+        ).pack(side="left", padx=20, pady=10)
+
+        self.game_score_label = ctk.CTkLabel( header_frame,  text=f"Score: {self.current_score}",  font=(self.font, 20, "bold"), text_color=("#4ecca3", "#2c9c7a")
+        )
+        self.game_score_label.pack(side="right", padx=20, pady=10)
+        
+        # Back button
+        back_btn = ctk.CTkButton( header_frame,  text="🏠 Home",  command=self.setup_main_window,  width=100, 
+                                 height=40,  corner_radius=15,  font=(self.font, 16, "bold"),  fg_color="#5352ed",  
+                                 hover_color="#3742fa", border_width=2,  border_color="#2c3e50"
+        )
+        back_btn.pack(side="right", padx=15, pady=10)
+        
+        # Game content 
+        self.quiz_content_frame = ctk.CTkFrame( self.game_frame,  corner_radius=20,  border_width=2, border_color=("#3d3d5c", "#1f1f2e"),  fg_color=("#2d2d44", "#16162b")
+        )
+        self.quiz_content_frame.pack(expand=True, fill="both", padx=60, pady=(20, 40), ipadx=20, ipady=20)
+        
+        # Select random question
+        self.current_question = random.choice(self.quiz_questions)
+        
+        # Question display
+        self.question_label = ctk.CTkLabel( self.quiz_content_frame, text=self.current_question["question"], font=(self.font, 24, "bold"),
+                                           wraplength=800, text_color=("#E0E0E0", "#C0C0C0")
+        )
+        self.question_label.pack(pady=30, padx=40)
+        
+        # Options frame 
+        self.options_frame = ctk.CTkFrame( self.quiz_content_frame,  fg_color=("#222236", "#121220"), corner_radius=15,  border_width=1,  border_color=("#3d3d5c", "#1f1f2e")
+        )
+        self.options_frame.pack(pady=20, padx=40, fill="x")
+        
+        # Create option buttons
+        self.option_buttons = []
+        self.selected_option = tk.IntVar(value=-1)
+        
+        for i, option in enumerate(self.current_question["options"]):
+            btn = ctk.CTkButton( self.options_frame,  text=option,  command=lambda idx=i: self.select_quiz_option(idx),width=500,  height=60,  
+                                font=(self.font, 18), fg_color="#2196F3",  hover_color="#1976D2", corner_radius=10, border_width=1, border_color="#1565C0"
+            )
+            btn.pack(pady=12, padx=30)
+            self.option_buttons.append(btn)
+        
+        # Submit button 
+        self.quiz_submit_btn = ctk.CTkButton( self.quiz_content_frame, text="✅ Submit Answer", command=self.check_quiz_answer, font=(self.font, 20, "bold"), 
+                                             fg_color="#4CAF50", hover_color="#45a049", width=220, height=60, corner_radius=12, border_width=2, border_color="#2d6a4f"
+        )
+        self.quiz_submit_btn.pack(pady=30)
+        
+        # Next question button
+        self.next_quiz_btn = ctk.CTkButton( self.quiz_content_frame, text="➡️ Next Question", command=self.next_quiz_question, font=(self.font, 18, "bold"), 
+                                           fg_color="#FF9800", hover_color="#F57C00", width=220, height=60, corner_radius=12, border_width=2, border_color="#b35900")
+        
+        # Feedback label
+        self.quiz_feedback_label = ctk.CTkLabel( self.quiz_content_frame,  text="",  font=(self.font, 18, "bold"), height=60, corner_radius=10, wraplength=700)
+        self.quiz_feedback_label.pack(pady=20)
+
+    def select_quiz_option(self, option_index):
+        """Select a quiz option"""
+        self.selected_option.set(option_index)
+        
+        # Update button colors
+        for i, btn in enumerate(self.option_buttons):
+            if i == option_index:
+                btn.configure(fg_color="#FFD700", hover_color="#FFC107", text_color="#000000")
+            else:
+                btn.configure(fg_color="#2196F3", hover_color="#1976D2", text_color="#FFFFFF")
+    
+    def check_quiz_answer(self):
+        """Check the quiz answer"""
+        if self.selected_option.get() == -1:
+            self.quiz_feedback_label.configure(
+                text="⚠️ Please select an answer first!",
+                text_color="#FF9800"
+            )
+            return
+        
+        correct_index = self.current_question["correct"]
+        selected_index = self.selected_option.get()
+        
+        # Update button colors to show correct/incorrect
+        for i, btn in enumerate(self.option_buttons):
+            if i == correct_index:
+                btn.configure(fg_color="#4CAF50", hover_color="#4CAF50", text_color="#FFFFFF")
+            elif i == selected_index and i != correct_index:
+                btn.configure(fg_color="#F44336", hover_color="#F44336", text_color="#FFFFFF")
+            else:
+                btn.configure(fg_color="#757575", hover_color="#757575", text_color="#FFFFFF")
+            btn.configure(state="disabled")
+        
+        if selected_index == correct_index:
+            self.streak_count += 1
+            points = 20 + (self.streak_count * 5)
+            self.current_score += points
+            self.quiz_feedback_label.configure(
+                text=f"🎉 Correct! +{points} points\n💡 {self.current_question['explanation']}",
+                text_color="#4CAF50"
+            )
+        else:
+            self.streak_count = 0
+            correct_answer = self.current_question["options"][correct_index]
+            self.quiz_feedback_label.configure(
+                text=f"❌ Wrong! The correct answer was: {correct_answer}\n💡 {self.current_question['explanation']}",
+                text_color="#F44336"
+            )
+        
+        self.update_game_score()
+        
+        # Hide submit button and show next button
+        self.quiz_submit_btn.pack_forget()
+        self.next_quiz_btn.pack(pady=10)
+    
+    def next_quiz_question(self):
+        """Load next quiz question"""
+        self.current_question = random.choice(self.quiz_questions)
+        self.selected_option.set(-1)
+        
+        # Update question
+        self.question_label.configure(text=self.current_question["question"])
+        
+        # Update option buttons
+        for i, btn in enumerate(self.option_buttons):
+            btn.configure( text=f"{chr(65+i)}. {self.current_question['options'][i]}", fg_color="#2196F3",
+                          hover_color="#1976D2", text_color="#FFFFFF", state="normal")
+        
+        # Reset UI
+        self.quiz_feedback_label.configure(text="")
+        self.next_quiz_btn.pack_forget()
+        self.quiz_submit_btn.pack(pady=30)
+        
     def setup_word_match(self):
         print("Setting up Word Match...")
 

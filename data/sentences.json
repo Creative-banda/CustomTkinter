@@ -3,5 +3,19 @@
             {"scrambled": ["Plants", "need", "sunlight", "to", "grow"], "correct": "Plants need sunlight to grow"},
             {"scrambled": ["Earth", "revolves", "around", "the", "sun"], "correct": "Earth revolves around the sun"},
             {"scrambled": ["Water", "boils", "at", "100", "degrees"], "correct": "Water boils at 100 degrees"},
-            {"scrambled": ["Birds", "have", "feathers", "and", "wings"], "correct": "Birds have feathers and wings"}
+            {"scrambled": ["Birds", "have", "feathers", "and", "wings"], "correct": "Birds have feathers and wings"},
+            {"scrambled": ["Fish", "swim", "in", "water"], "correct": "Fish swim in water"},
+            {"scrambled": ["Insects", "have", "six", "legs"], "correct": "Insects have six legs"},
+            {"scrambled": ["Reptiles", "are", "cold-blooded", "animals"], "correct": "Reptiles are cold-blooded animals."},
+            {"scrambled": ["The", "moon", "orbits", "the", "Earth"], "correct": "The moon orbits the Earth."},
+            {"scrambled": ["Trees", "produce", "oxygen", "through", "photosynthesis"], "correct": "Trees produce oxygen through photosynthesis."},
+            {"scrambled": ["The", "sky", "is", "blue", "during", "the", "day"], "correct": "The sky is blue during the day"},
+            {"scrambled": ["Clouds", "are", "made", "of", "water", "vapor"], "correct": "Clouds are made of water vapor"},
+            {"scrambled": ["The", "ocean", "is", "home", "to", "many", "species"], "correct": "The ocean is home to many species"},
+            {"scrambled": ["Mountains", "are", "formed", "by", "tectonic", "activity"], "correct": "Mountains are formed by tectonic activity"},
+            {"scrambled": ["Volcanoes", "erupt", "lava", "and", "ash"], "correct": "Volcanoes erupt lava and ash"},
+            {"scrambled": ["Deserts", "receive", "very", "little", "rainfall"], "correct": "Deserts receive very little rainfall"},
+            {"scrambled": ["Snowflakes", "are", "unique", "in", "shape"], "correct": "Snowflakes are unique in shape."},
+            {"scrambled": ["Rainbows", "form", "after", "a", "rainstorm"], "correct": "Rainbows form after a rainstorm."},
+            {"scrambled": ["Lightning", "is", "a", "natural", "electrical", "discharge"],"correct": "Lightning is a natural electrical discharge."}
         ]

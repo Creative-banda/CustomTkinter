@@ -21,6 +21,7 @@ class WordverseGame:
         self.root.bind("<F11>", lambda e: self.root.attributes("-fullscreen", True))
         self.font = ctk.CTkFont(family="Arial", size=20, weight="bold")
 
+        
         # Game state variables
         self.current_score = 0
         self.streak_count = 0
@@ -995,6 +996,7 @@ class WordverseGame:
         
         # Clear feedback
         self.match_feedback_label.configure(text="")
+    
     
     def run(self):
         """Start the game"""
