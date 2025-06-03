@@ -17,14 +17,10 @@ class WordverseGame:
         # make the window full screen
         self.root.attributes("-fullscreen", True)
         # self.root.attributes("-topmost", True)
-        self.root.bind("<Escape>", lambda e: self.root.attributes("-fullscreen", False))
-        self.root.bind("<F11>", lambda e: self.root.attributes("-fullscreen", True))
-        self.font = ctk.CTkFont(family="Arial", size=20, weight="bold")
 
         # Game state variables
         self.current_score = 0
         self.streak_count = 0
-        self.is_animating = False
         self.font = "Chewy"
         
         # Game data

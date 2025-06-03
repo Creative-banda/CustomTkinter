@@ -1,9 +1,11 @@
-# Day 2.1: Wordverse Game - Scrambled Words UI
-# In this Code Snippet, we will use json to load game data.
-# We will understand what is json file and how to use it in our game and how go though a data and do any operation on it.
+# Day 1.3: Wordverse Game - Main Menu UI
+# In this Code Snippet, we will add the buttons for game modes, and exit button.
+# We will understand how to create buttons and how to use grid layout in CustomTkinter. 
+
+
+# Task1 : Add Other Games buttons with there own design and color
 
 import customtkinter as ctk
-import json
 
 # Set CustomTkinter appearance
 ctk.set_appearance_mode("dark")
@@ -23,25 +25,7 @@ class WordverseGame:
         # Game state variables
         self.font = "Chewy"
         self.setup_main_window()  # Initialize the main window
-        
-        # Load game data
-        self.setup_game_data()
- 
-    def setup_game_data(self):
-        """Initialize all game data"""
-        
-        # Word Scramble data
-        self.scramble_words = self.load_json("scramble_words.json")
-
-    def load_json(self, file_name):
-        try:
-            with open(f'data/{file_name}', 'r') as file:
-                data = json.load(file)
-        
-            return data
-        except:
-            print(f"{file_name} Not Found")    
-
+      
     # Initialize UI
     def setup_main_window(self):
         """Create the main landing page with enhanced visual appeal"""
@@ -117,8 +101,6 @@ class WordverseGame:
             button_configs = [
                 {"text": "🧩 Word Scramble", "color": "#FF6B6B"},
                 {"text": "📖 Sentence Builder", "color": "#4ECDC4"},
-                {"text": "❓ Subject Quiz", "color": "#45B7D1"},
-                {"text": "🔀 Word Match", "color": "#96CEB4"}
             ]
             
             for i, config in enumerate(button_configs):
@@ -127,10 +109,8 @@ class WordverseGame:
                     text=config["text"],
                     width=250,
                     height=100,
-                    command=lambda text=config["text"]: print(f"Selected: {text}"),
                     font=(self.font, 18, "bold"),
                     fg_color=config["color"],
-                    hover_color=self.darken_color(config["color"]),
                     corner_radius=20,
                 )
                 row = i // 2
@@ -140,17 +120,6 @@ class WordverseGame:
             # Configure grid weights
             self.buttons_frame.grid_columnconfigure(0, weight=1)
             self.buttons_frame.grid_columnconfigure(1, weight=1)
-    
-    def darken_color(self, color):
-        """Create a darker version of a color for hover effect"""
-        # Simple color darkening
-        color_map = {
-            "#FF6B6B": "#E55555",
-            "#4ECDC4": "#3BB5AD",
-            "#45B7D1": "#3A9BC1",
-            "#96CEB4": "#7FB89A"
-        }
-        return color_map.get(color, color)
     
 if __name__ == "__main__":
     game = WordverseGame()

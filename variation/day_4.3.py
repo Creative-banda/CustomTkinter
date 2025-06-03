@@ -1,6 +1,5 @@
 # Day 4.2: Wordverse Game - Sentence Builder Mode
-# In this code snippet, We will use dummy data for creating UI.
-# We will create the Question and it options UI using dummy data
+# In this code snippet, We will load actual data fromW
 
 import customtkinter as ctk
 import json

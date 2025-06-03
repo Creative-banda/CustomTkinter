@@ -1,6 +1,6 @@
 # Day 4.2: Wordverse Game - Sentence Builder Mode
 # In this code snippet, We will use dummy data for creating UI.
-# We will create the Question and it options UI using dummy data
+# We will create the Question and it options and Submit button UI using dummy data
 
 import customtkinter as ctk
 import json
@@ -589,6 +589,13 @@ class WordverseGame:
                                 font=(self.font, 18), fg_color="#2196F3",  hover_color="#1976D2", corner_radius=10, border_width=1, border_color="#1565C0"
             )
             btn.pack(pady=12, padx=30)
+
+        # Submit button 
+        self.quiz_submit_btn = ctk.CTkButton( self.quiz_content_frame, text="✅ Submit Answer", font=(self.font, 20, "bold"), 
+                                             fg_color="#4CAF50", hover_color="#45a049", width=220, height=60, corner_radius=12, border_width=2, border_color="#2d6a4f"
+        )
+        self.quiz_submit_btn.pack(pady=30)
+        
         
     def select_quiz_option(self, option):
         print("Selected Option :",option)

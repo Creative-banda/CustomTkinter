@@ -81,7 +81,7 @@ class WordverseGame:
         
         self.score_label = ctk.CTkLabel(
             self.score_frame,
-            text=f"🏆 Total Score: {self.current_score} | 🔥 Streak: {self.streak_count}",
+            text=f"🏆 Total Score: 0 | 🔥 Streak: 0",
             font=(self.font, 18, "bold"),
             text_color=("#FFFBAC", "#F8F9D7")
         )
@@ -169,7 +169,7 @@ class WordverseGame:
         ctk.CTkLabel( header_frame,  text="🧩 Word Scramble Challenge",  font=(self.font, 38, "bold"), text_color=("#FFD700", "#FFA500")  # Gold gradient
         ).pack(side="left", padx=20, pady=10)
 
-        self.game_score_label = ctk.CTkLabel( header_frame,  text=f"Score: {self.current_score}",  font=(self.font, 20, "bold"), text_color=("#4ecca3", "#2c9c7a")  # Teal gradient
+        self.game_score_label = ctk.CTkLabel( header_frame,  text=f"Score: 0",  font=(self.font, 20, "bold"), text_color=("#4ecca3", "#2c9c7a")  # Teal gradient
         )
         self.game_score_label.pack(side="right", padx=20, pady=10)
         

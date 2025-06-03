@@ -1,9 +1,8 @@
-# Day 2.1: Wordverse Game - Scrambled Words UI
-# In this Code Snippet, we will use json to load game data.
-# We will understand what is json file and how to use it in our game and how go though a data and do any operation on it.
+# Day 1.4: Wordverse Game - Main Menu UI
+# In this Code Snippet, we will enhance the main menu UI buttons by adding hover effects,
+# We will understand how to use dictionaries to manage button configurations and what is the use of lambda functions in CustomTkinter.
 
 import customtkinter as ctk
-import json
 
 # Set CustomTkinter appearance
 ctk.set_appearance_mode("dark")
@@ -24,24 +23,6 @@ class WordverseGame:
         self.font = "Chewy"
         self.setup_main_window()  # Initialize the main window
         
-        # Load game data
-        self.setup_game_data()
- 
-    def setup_game_data(self):
-        """Initialize all game data"""
-        
-        # Word Scramble data
-        self.scramble_words = self.load_json("scramble_words.json")
-
-    def load_json(self, file_name):
-        try:
-            with open(f'data/{file_name}', 'r') as file:
-                data = json.load(file)
-        
-            return data
-        except:
-            print(f"{file_name} Not Found")    
-
     # Initialize UI
     def setup_main_window(self):
         """Create the main landing page with enhanced visual appeal"""
