@@ -492,7 +492,7 @@ class WordverseGame:
             self.selected_words.remove(word)
             self.create_word_buttons()
             self.update_selected_display()
-    
+
     def clear_sentence(self):
         """Clear all selected words"""
         self.selected_words = []

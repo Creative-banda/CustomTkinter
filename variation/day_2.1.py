@@ -1,6 +1,6 @@
 # Day 2.1: Wordverse Game - Scrambled Words UI
 # In this Code Snippet, we will use json to load game data.
-# We will understand what is json file and how to use it in our game.
+# We will understand what is json file and how to use it in our game and how go though a data and do any operation on it.
 
 import customtkinter as ctk
 import json
