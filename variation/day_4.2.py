@@ -1,5 +1,6 @@
-# Day 4.1: Wordverse Game - Quiz Game
-# In this code snippet, We will add Quiz Game UI main frame
+# Day 4.2: Wordverse Game - Sentence Builder Mode
+# In this code snippet, We will use dummy data for creating UI.
+# We will create the Question and it options UI using dummy data
 
 import customtkinter as ctk
 import json
@@ -539,6 +540,7 @@ class WordverseGame:
         # Game frame with gradient background
         self.game_frame = ctk.CTkFrame(self.root, corner_radius=0, fg_color=("#1a1a2e", "#0f0f1a"))
         self.game_frame.pack(fill="both", expand=True)
+    
         
         # Header 
         header_frame = ctk.CTkFrame(self.game_frame, fg_color=("#1A1A2E", "#0F111A"), corner_radius=15)
@@ -562,6 +564,34 @@ class WordverseGame:
         self.quiz_content_frame = ctk.CTkFrame( self.game_frame,  corner_radius=20,  border_width=2, border_color=("#3d3d5c", "#1f1f2e"),  fg_color=("#2d2d44", "#16162b")
         )
         self.quiz_content_frame.pack(expand=True, fill="both", padx=60, pady=(20, 40), ipadx=20, ipady=20)
+        
+        # Dummy Data For UI Testing
+        self.current_question = {
+        "question": "What is the hardest natural substance on Earth?",
+        "options": ["Gold", "Iron", "Diamond", "Quartz"],
+        "correct": 2,
+        "explanation": "Diamond is the hardest natural substance on Earth."
+    }   
+        # Question display
+        self.question_label = ctk.CTkLabel( self.quiz_content_frame, text=self.current_question["question"], font=(self.font, 24, "bold"),
+                                           wraplength=800, text_color=("#E0E0E0", "#C0C0C0")
+        )
+        self.question_label.pack(pady=30, padx=40)
+        
+        # Options frame 
+        self.options_frame = ctk.CTkFrame( self.quiz_content_frame,  fg_color=("#222236", "#121220"), corner_radius=15,  border_width=1,  border_color=("#3d3d5c", "#1f1f2e")
+        )
+        self.options_frame.pack(pady=20, padx=40, fill="x")
+        
+        
+        for i, option in enumerate(self.current_question["options"]):
+            btn = ctk.CTkButton( self.options_frame,  text=option,  command=lambda idx=i: self.select_quiz_option(idx),width=500,  height=60,  
+                                font=(self.font, 18), fg_color="#2196F3",  hover_color="#1976D2", corner_radius=10, border_width=1, border_color="#1565C0"
+            )
+            btn.pack(pady=12, padx=30)
+        
+    def select_quiz_option(self, option):
+        print("Selected Option :",option)
 
     def setup_word_match(self):
         print("Setting up Word Match...")

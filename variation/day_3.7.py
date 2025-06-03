@@ -1,4 +1,4 @@
-# Day 3: Wordverse Game - Sentence Builder Mode
+# Day 3.7: Wordverse Game - Sentence Builder Mode
 # In this code snippet, We will implement use Hint and Skip buttons in the Word Scramble game mode.
 
 import customtkinter as ctk
