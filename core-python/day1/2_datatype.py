@@ -49,7 +49,7 @@ print(a)       # Output: None
 
 # Use the type() function to see what data type a variable has
 
-print(type(my_int))     # Output: <class 'int'>
+print(type(age))     # Output: <class 'int'>
 
 # Task: Check the type of pi, greeting, student, is_student and a
 
