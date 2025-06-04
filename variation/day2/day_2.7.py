@@ -1,7 +1,8 @@
-# Day 2.4: Wordverse Game - Scramble Words Mode
-# In this Code Snippet, we will add the actual game logic for the Scramble Words mode.
-# Instead of dummy data we will use real data from a JSON file.
-# We will implement the game mechanics, including word scrambling, checking answers, and scoring.
+# Day 2.7: Wordverse Game - Scramble Words Mode
+# In this Code Snippet, we add feature to take hints.
+
+# Task: The "Skip" button does not work right now. Your job is to make the Skip button work.
+# Hint: You do not need to create a new method for skipping. There is already a method you can use to show the next word.
 
 import customtkinter as ctk
 import json
@@ -92,7 +93,7 @@ class WordverseGame:
         )
         self.score_label.pack(padx=30, pady=15)
         
-        # Game mode buttons in a visually distinct container
+        # Game mode buttons
         self.buttons_container = ctk.CTkFrame(self.main_frame, fg_color="transparent")
         self.buttons_container.pack(pady=20, fill="both", expand=True, padx=80)
         
@@ -113,19 +114,10 @@ class WordverseGame:
         self.create_game_buttons()
         
         # Exit button
-        self.exit_button = ctk.CTkButton(
-            self.main_frame,
-            text="Exit Game",
-            font=(self.font, 16),
-            fg_color="#B91646",
-            hover_color="#A21441",
-            width=120,
-            height=40,
-            corner_radius=10,
-            command=self.root.destroy
-        )
+        self.exit_button = ctk.CTkButton( self.main_frame, text="Exit Game", font=(self.font, 16), fg_color="#B91646",
+                                         hover_color="#A21441", width=120, height=40, corner_radius=10, command=self.root.destroy )
         self.exit_button.pack(pady=(10, 30))
-        
+
     def create_game_buttons(self):
         """Create animated game mode selection buttons"""
         button_configs = [
@@ -193,7 +185,7 @@ class WordverseGame:
                                  hover_color="#3742fa", border_width=2, border_color="#2c3e50" )
         back_btn.pack(side="right", padx=15, pady=10)
         
-        # Game content with shadow effect
+        # Game content
         self.scramble_content_frame = ctk.CTkFrame( self.game_frame, corner_radius=20, border_width=2,
                                                    border_color=("#3d3d5c", "#1f1f2e"), fg_color=("#2d2d44", "#16162b") )
         self.scramble_content_frame.pack(expand=True, fill="both", padx=80, pady=(20, 40), ipadx=20, ipady=20)
@@ -244,7 +236,7 @@ class WordverseGame:
         submit_btn.pack(side="left", padx=12)
 
         # Hint button
-        hint_btn = ctk.CTkButton( buttons_frame, text="💡 Hint", font=(self.font, 18, "bold"), 
+        hint_btn = ctk.CTkButton( buttons_frame, text="💡 Hint", command=self.show_hint, font=(self.font, 18, "bold"), 
                                  width=130, height=45, fg_color="#FF9800", hover_color="#F57C00", corner_radius=15)
         hint_btn.pack(side="left", padx=12)
 
@@ -271,7 +263,31 @@ class WordverseGame:
         random.shuffle(letters)
         scrambled = ''.join(letters)
         return scrambled
+
+    def next_scramble_word(self):
+        """Load next scrambled word"""
+        
+        self.current_category = random.choice(list(self.scramble_words.keys()))
+        self.current_word = random.choice(self.scramble_words[self.current_category])
+        self.scrambled_word = self.scramble_word(self.current_word)
+                
+        # Update display
+        self.scrambled_label.configure(text=self.scrambled_word)
+        self.answer_entry.delete(0, 'end')
+        self.feedback_label.configure(text="")
+        
+        # Update category
+        self.category.configure(text=f"Category: {self.current_category}")
     
+    def show_hint(self):
+        """Show a hint for the current word"""
+        
+        hint_text = f"First letter: {self.current_word[0]}"
+        self.feedback_label.configure(text=f"💡 Hint: {hint_text}", text_color="#FF9800")
+        
+        # Reduce score for using hint
+        self.current_score = max(0, self.current_score - 2)
+        self.update_game_score()
 
     def animate_feedback(self, type="success"):
         """Animate feedback"""
@@ -307,8 +323,9 @@ class WordverseGame:
                 text_color="#F44336"
             )
             self.animate_feedback("failure")
-
+        
         self.update_game_score()
+        self.root.after(2000, self.next_scramble_word)
 
     def setup_sentence_builder(self):
         print("Setting up Sentence Builder...")

@@ -1,9 +1,7 @@
 # Day 2.6: Wordverse Game - Scramble Words Mode
 # In this Code Snippet, we will add Color Animation, If the answer is correct.
 
-# Task 1: Add a color animation for wrong answers by creating a method called "animate_failure".
-#         This should work just like the color animation for correct answers, but for wrong answers.
-#         Make sure to call this method when the answer is wrong.
+# Task: Right now, the text animates only when the answer is correct. Figure out how to use the same method to animate the text when the answer is wrong too.
 
 import customtkinter as ctk
 import json
@@ -266,11 +264,11 @@ class WordverseGame:
         return scrambled
     
 
-    def animate_success(self):
-        """Animate success feedback"""
+    def animate_feedback(self, type="success"):
+        """Animate feedback"""
+        color = "#4CAF50" if type == "success" else "#F44336"
         original_color = self.scrambled_label.cget("text_color")
-        print(original_color)
-        self.scrambled_label.configure(text_color="#4CAF50")
+        self.scrambled_label.configure(text_color=color)
         self.root.after(500, lambda: self.scrambled_label.configure(text_color=original_color))
 
     def update_game_score(self):
@@ -292,7 +290,7 @@ class WordverseGame:
                 text=f"🎉 Correct! +{points} points",
                 text_color="#4CAF50"
             )
-            self.animate_success()
+            self.animate_feedback()
         else:
             self.streak_count = 0
             self.feedback_label.configure(
