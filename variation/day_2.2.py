@@ -2,7 +2,7 @@
 # In this code, we will make the top part (header) of the game window.
 
 # Task 1: Add the missing font to all buttons and labels so they look nice.
-# Task 2: Make a function that lets you go back to the main menu.
+# Task 2: Use a function that lets you go back to the main menu.
 # Task 3: The main frame needs a background color. Can you add a nice color to it?
 
 import customtkinter as ctk

@@ -285,15 +285,15 @@ class WordverseGame:
                 text=f"🎉 Correct! +{points} points",
                 text_color="#4CAF50"
             )
-            self.animate_success()
+            self.animate_feedback()
         else:
             self.streak_count = 0
             self.feedback_label.configure(
                 text=f"❌ Wrong! The answer was: {self.current_word}",
                 text_color="#F44336"
             )
-            self.animate_failure()
-        
+            self.animate_feedback("failure")
+
         self.update_game_score()
         self.root.after(2000, self.next_scramble_word)
     
@@ -327,16 +327,11 @@ class WordverseGame:
         # Update category
         self.category.configure(text=f"Category: {self.current_category}")
     
-    def animate_success(self):
-        """Animate success feedback"""
+    def animate_feedback(self, type="success"):
+        """Animate feedback"""
+        color = "#4CAF50" if type == "success" else "#F44336"
         original_color = self.scrambled_label.cget("text_color")
-        self.scrambled_label.configure(text_color="#4CAF50")
-        self.root.after(500, lambda: self.scrambled_label.configure(text_color=original_color))
-    
-    def animate_failure(self):
-        """Animate failure feedback"""
-        original_color = self.scrambled_label.cget("text_color")
-        self.scrambled_label.configure(text_color="#F44336")
+        self.scrambled_label.configure(text_color=color)
         self.root.after(500, lambda: self.scrambled_label.configure(text_color=original_color))
     
     def update_game_score(self):
