@@ -74,10 +74,6 @@ age_str = "30"
 age_int = int(age_str)
 print(age_int)         # Output: 30
 
-# Convert list to string (with join)
-my_list = ["apple", "banana", "cherry"]
-list_str = ", ".join(my_list)
-print(list_str)        # Output: "apple, banana, cherry"
 
 # Convert number to float
 whole_number = 7
