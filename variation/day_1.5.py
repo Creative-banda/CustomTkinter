@@ -1,4 +1,4 @@
-# Day 1.3: Wordverse Game - Main Menu UI
+# Day 1.5: Wordverse Game - Main Menu UI
 # In this Code Snippet, we will add the buttons for game modes.
 # We will understand how to create buttons and how to use grid layout in CustomTkinter. 
 

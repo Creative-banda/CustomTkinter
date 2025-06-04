@@ -1,11 +1,8 @@
 # Day 2.3: Wordverse Game - Scrambled Words UI
-# In this Code Snippet, we will create the main frame of the Scrambled Words game
-# We add dummy data to the game and create a basic UI for the game.
-# We added 2 new Variables current_score and streak_count to keep track of the score and streaks.
+# In this Code Snippet, we will add a new frame which will contain the game interface.
 
 import customtkinter as ctk
 import json
-import random
 
 # Set CustomTkinter appearance
 ctk.set_appearance_mode("dark")
@@ -17,28 +14,18 @@ class WordverseGame:
         self.root = ctk.CTk()
         self.root.title("Wordverse: Learn & Conquer")
         self.root.resizable(False, False)
-
-        # Game state variables
-        self.font = "Chewy"
-        self.setup_main_window()  # Initialize the main window
-
-        # Load game data
-        self.setup_game_data()
         
         # make the window full screen
         self.root.attributes("-fullscreen", True)
         # self.root.attributes("-topmost", True)
 
         # Game state variables
-        self.current_score = 0
-        self.streak_count = 0
         self.font = "Chewy"
-        
-        # Load game data
-        self.setup_game_data()
-        
         self.setup_main_window()  # Initialize the main window
 
+        # Load game data
+        self.setup_game_data()
+ 
     def setup_game_data(self):
         """Initialize all game data"""
         
@@ -93,7 +80,7 @@ class WordverseGame:
         
         self.score_label = ctk.CTkLabel(
             self.score_frame,
-            text=f"🏆 Total Score: {self.current_score} | 🔥 Streak: {self.streak_count}",
+            text=f"🏆 Total Score: 0 | 🔥 Streak: 0",
             font=(self.font, 18, "bold"),
             text_color=("#FFFBAC", "#F8F9D7")
         )
@@ -170,18 +157,18 @@ class WordverseGame:
         for widget in self.root.winfo_children():
             widget.destroy()
         
-        # Game frame
+        # Game frame with gradient background
         self.game_frame = ctk.CTkFrame(self.root, corner_radius=0, fg_color=("#1a1a2e", "#0f0f1a"))
         self.game_frame.pack(fill="both", expand=True)
         
-        # Header 
+        # Header with modern styling
         header_frame = ctk.CTkFrame(self.game_frame, fg_color="transparent")
         header_frame.pack(fill="x", padx=30, pady=(20, 10))
 
         ctk.CTkLabel( header_frame,  text="🧩 Word Scramble Challenge",  font=(self.font, 38, "bold"), text_color=("#FFD700", "#FFA500")  # Gold gradient
         ).pack(side="left", padx=20, pady=10)
 
-        self.game_score_label = ctk.CTkLabel( header_frame,  text=f"Score: {self.current_score}",  font=(self.font, 20, "bold"), text_color=("#4ecca3", "#2c9c7a")  # Teal gradient
+        self.game_score_label = ctk.CTkLabel( header_frame,  text=f"Score: 0",  font=(self.font, 20, "bold"), text_color=("#4ecca3", "#2c9c7a")  # Teal gradient
         )
         self.game_score_label.pack(side="right", padx=20, pady=10)
         
@@ -195,61 +182,6 @@ class WordverseGame:
         self.scramble_content_frame = ctk.CTkFrame( self.game_frame, corner_radius=20, border_width=2,
                                                    border_color=("#3d3d5c", "#1f1f2e"), fg_color=("#2d2d44", "#16162b") )
         self.scramble_content_frame.pack(expand=True, fill="both", padx=80, pady=(20, 40), ipadx=20, ipady=20)
-
-        # Display category
-        category_frame = ctk.CTkFrame( self.scramble_content_frame,  fg_color="#2980b9", corner_radius=15)
-        category_frame.pack(pady=(30, 20))
-
-        self.category = ctk.CTkLabel( category_frame, text=f"Category: CATEGORY", font=(self.font, 22, "bold"), 
-                     text_color="#ecf0f1", padx=20, pady=10 )
-        self.category.pack()
-
-        # Instructions
-        ctk.CTkLabel( self.scramble_content_frame, text="Unscramble this word:", font=(self.font, 18), text_color=("#e0e0e0", "#c0c0c0")
-        ).pack(pady=(20, 10))
-        
-        # Scrambled word
-        word_frame = ctk.CTkFrame( self.scramble_content_frame, fg_color=("#191930", "#0d0d1a"), corner_radius=15, 
-                                  border_width=1, border_color=("#3d3d5c", "#1f1f2e"))
-        word_frame.pack(pady=15, ipadx=30, ipady=15)
-        
-        self.scrambled_label = ctk.CTkLabel( word_frame, text="Any Text", font=(self.font, 46, "bold"), text_color=("#FFD700", "#FFA500"))
-        self.scrambled_label.pack(pady=10)
-        
-        # Input field
-        entry_frame = ctk.CTkFrame(self.scramble_content_frame, fg_color="transparent")
-        entry_frame.pack(pady=30)
-        
-        self.answer_entry = ctk.CTkEntry( entry_frame, placeholder_text="Type your answer here...", font=(self.font, 20), width=350, 
-                                         height=50, corner_radius=15, border_width=2, border_color=("#3d3d5c", "#1f1f2e"))
-        self.answer_entry.pack()
-        
-        # Buttons frame
-        buttons_frame = ctk.CTkFrame(self.scramble_content_frame, fg_color="transparent")
-        buttons_frame.pack(pady=25)
-        
-        # Submit button
-        submit_btn = ctk.CTkButton( buttons_frame, text="✅ Submit", font=(self.font, 18, "bold"), 
-                                   width=130, height=45, fg_color="#4CAF50", hover_color="#45a049", corner_radius=15)
-        submit_btn.pack(side="left", padx=12)
-
-        # Hint button
-        hint_btn = ctk.CTkButton( buttons_frame, text="💡 Hint", font=(self.font, 18, "bold"), 
-                                 width=130, height=45, fg_color="#FF9800", hover_color="#F57C00", corner_radius=15)
-        hint_btn.pack(side="left", padx=12)
-
-        # Skip button
-        skip_btn = ctk.CTkButton( buttons_frame, text="⏭️ Skip", font=(self.font, 18, "bold"), 
-                                 width=130, height=45, fg_color="#757575", hover_color="#616161", corner_radius=15)
-        skip_btn.pack(side="left", padx=12)
-        
-        # Feedback label
-        self.feedback_label = ctk.CTkLabel( self.scramble_content_frame,  text="",  font=(self.font, 20, "bold"), corner_radius=10
-        )
-        self.feedback_label.pack(pady=25)
-        
-        # Focus on entry
-        self.answer_entry.focus()
 
 
 if __name__ == "__main__":

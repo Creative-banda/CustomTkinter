@@ -1,6 +1,9 @@
 # Day 2.2: Wordverse Game - Scrambled Words UI
-# In this Code Snippet, we will create the main frame of the Scrambled Words game
-# We understand how to adjust the header use different types of alignments.
+# In this code, we will make the top part (header) of the game window.
+
+# Task 1: Add the missing font to all buttons and labels so they look nice.
+# Task 2: Make a function that lets you go back to the main menu.
+# Task 3: The main frame needs a background color. Can you add a nice color to it?
 
 import customtkinter as ctk
 import json
@@ -159,30 +162,25 @@ class WordverseGame:
             widget.destroy()
         
         # Game frame with gradient background
-        self.game_frame = ctk.CTkFrame(self.root, corner_radius=0, fg_color=("#1a1a2e", "#0f0f1a"))
+        self.game_frame = ctk.CTkFrame(self.root, corner_radius=0)
         self.game_frame.pack(fill="both", expand=True)
         
         # Header with modern styling
         header_frame = ctk.CTkFrame(self.game_frame, fg_color="transparent")
         header_frame.pack(fill="x", padx=30, pady=(20, 10))
 
-        ctk.CTkLabel( header_frame,  text="🧩 Word Scramble Challenge",  font=(self.font, 38, "bold"), text_color=("#FFD700", "#FFA500")  # Gold gradient
+        ctk.CTkLabel( header_frame,  text="🧩 Word Scramble Challenge", text_color=("#FFD700", "#FFA500")  # Gold gradient
         ).pack(side="left", padx=20, pady=10)
 
-        self.game_score_label = ctk.CTkLabel( header_frame,  text=f"Score: 0",  font=(self.font, 20, "bold"), text_color=("#4ecca3", "#2c9c7a")  # Teal gradient
+        self.game_score_label = ctk.CTkLabel( header_frame,  text=f"Score: 0", text_color=("#4ecca3", "#2c9c7a")  # Teal gradient
         )
         self.game_score_label.pack(side="right", padx=20, pady=10)
         
-        # Stylish back button
-        back_btn = ctk.CTkButton( header_frame,  text="🏠 Home",  command=self.setup_main_window,  width=100,
-                                 height=40, corner_radius=15, font=(self.font, 16, "bold"), fg_color="#5352ed", 
+        # Back button
+        back_btn = ctk.CTkButton( header_frame,  text="🏠 Home",  width=100,
+                                 height=40, corner_radius=15, fg_color="#5352ed", 
                                  hover_color="#3742fa", border_width=2, border_color="#2c3e50" )
         back_btn.pack(side="right", padx=15, pady=10)
-        
-        # Game content with shadow effect
-        self.scramble_content_frame = ctk.CTkFrame( self.game_frame, corner_radius=20, border_width=2,
-                                                   border_color=("#3d3d5c", "#1f1f2e"), fg_color=("#2d2d44", "#16162b") )
-        self.scramble_content_frame.pack(expand=True, fill="both", padx=80, pady=(20, 40), ipadx=20, ipady=20)
 
 
 if __name__ == "__main__":

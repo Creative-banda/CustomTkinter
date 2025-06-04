@@ -1,4 +1,4 @@
-# Day 1.4: Wordverse Game - Main Menu UI
+# Day 1.6: Wordverse Game - Main Menu UI
 # In this Code Snippet, we will enhance the main menu UI buttons by adding hover effects,
 # We will understand how to use dictionaries to manage button configurations and what is the use of lambda functions in CustomTkinter.
 

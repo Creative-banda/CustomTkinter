@@ -1,4 +1,4 @@
-# Day 1.2: Wordverse Game - Main Menu UI
+# Day 1.4: Wordverse Game - Main Menu UI
 # In this Code Snippet, we will add the header, title, subtitle, score display.
 # We will understand what is Frame and Label and how to use them in CustomTkinter.
 
