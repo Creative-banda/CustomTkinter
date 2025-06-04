@@ -10,38 +10,37 @@
 # ==========================
 
 # 1. Integer: whole numbers
-my_int = 10
-print(my_int)        # Output: 10
+age = 10
+print(age)        # Output: 10
 
 
 # 2. Float: numbers with decimals
-my_float = 3.14
-print(my_float)      # Output: 3.14
+pi = 3.14
+print(pi)      # Output: 3.14
 
 
 # 3. String: text data
-my_string = "Hello, world!"
-print(my_string)     # Output: Hello, world!
+greeting = "Hello, world!"
+print(greeting)     # Output: Hello, world!
 
 
 # 4. Boolean: True or False
-my_bool = True
-print(my_bool)       # Output: True
-
+is_student = True
+print(is_student)       # Output: True
 
 # 5. List: a collection of items in order
-my_list = [1, 2, 3, 4, 5]
-print(my_list)       # Output: [1, 2, 3, 4, 5]
+numbers = [1, 2, 3, 4, 5]
+print(numbers)       # Output: [1, 2, 3, 4, 5]
 
 
 # 6. Dictionary: key-value pairs
-my_dict = {"name": "Ahtesham", "age": 25}
-print(my_dict)       # Output: {'name': 'Ahtesham', 'age': 25}
+student = {"name": "Rahul", "age": 25}
+print(student)       # Output: {'name': 'Rahul', 'age': 25}
 
 
 # 7. NoneType: represents "nothing" or "no value"
-my_none = None
-print(my_none)       # Output: None
+a = None
+print(a)       # Output: None
 
 
 # ==================================
@@ -51,12 +50,9 @@ print(my_none)       # Output: None
 # Use the type() function to see what data type a variable has
 
 print(type(my_int))     # Output: <class 'int'>
-print(type(my_float))   # Output: <class 'float'>
-print(type(my_string))  # Output: <class 'str'>
-print(type(my_bool))    # Output: <class 'bool'>
-print(type(my_list))    # Output: <class 'list'>
-print(type(my_dict))    # Output: <class 'dict'>
-print(type(my_none))    # Output: <class 'NoneType'>
+
+# Task: Check the type of pi, greeting, student, is_student and a
+
 
 # ==================================
 # 4. Changing Between Data Types (Type Casting)
@@ -69,16 +65,12 @@ num = 42
 num_str = str(num)
 print(num_str)         # Output: "42"
 
-# Convert string to integer
+# Task: Convert the value of age_str into integer
 age_str = "30"
-age_int = int(age_str)
-print(age_int)         # Output: 30
 
 
-# Convert number to float
+# Task: Convert the value of whole_number into float
 whole_number = 7
-decimal_number = float(whole_number)
-print(decimal_number)  # Output: 7.0
 
 # ==================================
 # 5. Summary
