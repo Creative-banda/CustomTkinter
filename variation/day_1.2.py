@@ -36,7 +36,7 @@ class WordverseGame:
         # Header container
         self.header_frame = ctk.CTkFrame(self.main_frame, corner_radius=15)
         self.header_frame.pack(pady=(40, 20), padx=80, fill="x")
-        
+
         # Title
         self.title_label = ctk.CTkLabel( self.header_frame, text="✨ Wordverse: Learn & Conquer ✨"
         )

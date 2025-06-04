@@ -1,9 +1,9 @@
 # Day 1.3: Wordverse Game - Main Menu UI
-# In this Code Snippet, we will add the buttons for game modes, and exit button.
+# In this Code Snippet, we will add the buttons for game modes.
 # We will understand how to create buttons and how to use grid layout in CustomTkinter. 
 
 
-# Task1 : Add Other Games buttons with there own design and color
+# Task1 : Add Other Games buttons with your own design and color
 
 import customtkinter as ctk
 

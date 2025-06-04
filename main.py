@@ -67,7 +67,7 @@ class WordverseGame:
         self.header_frame = ctk.CTkFrame(self.main_frame, fg_color=("#1A1A2E", "#0F111A"), corner_radius=15)
         self.header_frame.pack(pady=(40, 20), padx=80, fill="x")
         
-        # Title with glow effect
+        # Title
         self.title_label = ctk.CTkLabel(
             self.header_frame,
             text="✨ Wordverse: Learn & Conquer ✨",
@@ -76,7 +76,7 @@ class WordverseGame:
         )
         self.title_label.pack(pady=(20, 5))
         
-        # Subtitle with better styling
+        # Subtitle
         self.subtitle_label = ctk.CTkLabel(
             self.header_frame,
             text="🧙‍♂️ Master Words, Conquer Knowledge! 🏆",
@@ -84,8 +84,8 @@ class WordverseGame:
             text_color=("#E6E6FA", "#DDA0DD")
         )
         self.subtitle_label.pack(pady=(0, 20))
-        
-        # Score display with visually appealing styling
+
+        # Score display section
         self.score_frame = ctk.CTkFrame(self.main_frame, corner_radius=20, fg_color=("#3E2C41", "#1F1D36"))
         self.score_frame.pack(pady=30, padx=200)
         

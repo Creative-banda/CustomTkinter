@@ -110,7 +110,6 @@ class WordverseGame:
                     text=config["text"],
                     width=250,
                     height=100,
-                    command=lambda text=config["text"]: print(f"Selected: {text}"),
                     font=(self.font, 18, "bold"),
                     fg_color=config["color"],
                     hover_color=self.darken_color(config["color"]),

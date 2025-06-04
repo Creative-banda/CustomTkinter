@@ -1,4 +1,4 @@
-# Day 1.2: Wordverse Game - Main Menu UI
+# Day 1.3: Wordverse Game - Main Menu UI
 # In this Code Snippet, we will use font, color and resize the Labels for Good Looking UI
 
 # Task1 : Add your own font to give different look
