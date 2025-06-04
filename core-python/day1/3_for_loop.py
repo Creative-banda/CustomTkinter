@@ -1,14 +1,14 @@
-# List of fruits
-fruits = ["apple", "banana", "cherry"]
+# Example of a for loop in Python
 
-# Iterate over each fruit in the list and print it
-for fruit in fruits:
-    print(fruit)
+for i in range(5):
+    print(i)  # Output: 0, 1, 2, 3, 4
+
+
+# Task: Write a for loop that prints numbers from 1 to 10.
 
 """
 Explanation:
 -------------
-We use a for loop to iterate over each element in the list 'fruits'.
-The variable 'fruit' takes the value of each element in the list one by one.
-In this case, it will print each fruit in the list: "apple", "banana", and "cherry".
+A for loop is used to repeat a block of code for each item in a sequence.
+Here, 'i' takes values from 0 to 4, and each value is printed on a new line.
 """

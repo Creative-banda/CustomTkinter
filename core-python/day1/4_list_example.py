@@ -46,3 +46,8 @@ print(joined_fruits)  # apple, cherry, orange
 # The join() method combines the elements of a list into a single string,
 # with each element separated by the specified separator (in this case, ", ").
 # This is useful for creating a readable string representation of the list.
+
+# ---------------------- Task ----------------------
+task_list = ["tomato", "onion", "potato"]
+
+# Task: Join the elements of task_list into a single string

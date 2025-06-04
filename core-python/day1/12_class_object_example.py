@@ -28,3 +28,6 @@ Key Point:
 - self is used to store data (name) inside the object.
 - dog1 has name = "Buddy"; dog2 has name = "Charlie".
 """
+
+# ------------------------ Task ------------------------
+# Task: Add new argument 'age' to the Dog class and modify the bark method to include the dog's age in the output.

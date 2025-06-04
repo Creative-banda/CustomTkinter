@@ -30,3 +30,14 @@ print(people[0])  # Output: {'name': 'Alice', 'age': 25}
 
 print(people[0]["name"])  # Output: Alice
 print(people[0]["age"])   # Output: 25
+
+
+# -------------------- Task --------------------
+# Create a list of dictionaries representing students with their names and grades
+students = [
+    {"name": "Rahul", "grade": 85},
+    {"name": "Priya", "grade": 90},
+    {"name": "Amit", "grade": 78}
+]
+# Task: Access the name and grade of the first student in the list
+# Also print the name and grade of each student in the list using a loop

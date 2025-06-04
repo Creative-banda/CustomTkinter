@@ -28,3 +28,6 @@ dog1.bark()
 #       Think of 'self' as the object itself (dog1).
 #       When dog1.bark() is called, Python automatically passes dog1 as the first argument to the method.
 # -----------------------------------------------------------
+
+# ------------------------ Task ------------------------
+# Task: Create a new method in the Dog class called 'sit' that prints "Dog is sitting" and call it using the dog1 object.

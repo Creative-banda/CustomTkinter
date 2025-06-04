@@ -35,3 +35,14 @@ print(person.get("city", "Not found"))  # Output: Not found
 # - The get() method is a safer way to access dictionary values.
 # - Here, a default value ("Not found") is returned if the key ("city") is not present.
 # - This prevents errors and provides a fallback value.
+
+# ----------------------------- Task -----------------------------
+
+# Create a dictionary of fruits with their prices
+fruit_prices = {
+    "apple": 0.5,
+    "banana": 0.3,
+    "cherry": 0.8
+}
+# Task: Access the price of "banana" using both direct access and the get() method also 
+# if the key is not present, return "Price not available"
