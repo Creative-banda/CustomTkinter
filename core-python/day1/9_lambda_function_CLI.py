@@ -1,16 +1,22 @@
-# Lambda functions are tiny, quick functions you can make for simple things.
-# You use them when you need a small function just one time.
+# -----------------------------------------------
+# Lambda Functions: Quick, Tiny, One-Time Helpers
+# -----------------------------------------------
 
-# Basic lambda: adds 10 to a number
+# Lambda functions are small, anonymous functions for simple tasks.
+# Use them when you need a function just once.
+
+# Example 1: Add 10 to a number
 add_ten = lambda x: x + 10
-print(add_ten(5))  # 15
+print(add_ten(5))  # Output: 15
 
-# This makes a tiny function that takes a number and adds 10 to it.
-# add_ten(5) means 5 + 10, so it prints 15.
+# Explanation:
+# - 'add_ten' is a lambda function that takes 'x' and returns x + 10.
+# - add_ten(5) => 5 + 10 = 15
 
-# Another example: multiply two numbers
+# Example 2: Multiply two numbers
 multiply = lambda x, y: x * y
-print(multiply(3, 4))  # 12
+print(multiply(3, 4))  # Output: 12
 
-# This makes a tiny function that takes two numbers and multiplies them.
-# multiply(3, 4) means 3 * 4, so it prints 12.
+# Explanation:
+# - 'multiply' is a lambda function that takes 'x' and 'y' and returns x * y.
+# - multiply(3, 4) => 3 * 4 = 12
