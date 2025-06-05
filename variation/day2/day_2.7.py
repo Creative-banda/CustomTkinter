@@ -1,8 +1,8 @@
 # Day 2.7: Wordverse Game - Scramble Words Mode
 # In this Code Snippet, we add feature to take hints.
 
-# Task: The "Skip" button does not work right now. Your job is to make the Skip button work.
-# Hint: You do not need to create a new method for skipping. There is already a method you can use to show the next word.
+# Task: The "Skip" button does not work right now. Your Task is to make the Skip button work.
+# Hint: You do not need to create a new method for skipping. There is already a method you can use to next the word.
 
 import customtkinter as ctk
 import json
