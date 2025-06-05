@@ -116,17 +116,8 @@ class WordverseGame:
         self.create_game_buttons()
         
         # Exit button
-        self.exit_button = ctk.CTkButton(
-            self.main_frame,
-            text="Exit Game",
-            font=(self.font, 16),
-            fg_color="#B91646",
-            hover_color="#A21441",
-            width=120,
-            height=40,
-            corner_radius=10,
-            command=self.root.destroy
-        )
+        self.exit_button = ctk.CTkButton( self.main_frame, text="Exit Game", font=(self.font, 16), fg_color="#B91646",
+                                         hover_color="#A21441", width=120, height=40, corner_radius=10, command=self.root.destroy)
         self.exit_button.pack(pady=(10, 30))
         
     def create_game_buttons(self):

@@ -32,11 +32,6 @@ print("Using ternary:", result)  # Output: Odd
 
 # value_if_true if condition else value_if_false
 
-# Another example:
-age = 17
-status = "Adult" if age >= 18 else "Minor"
-print(status)  # Output: Minor
-
 # ============================================
 # Summary
 # ============================================
@@ -47,3 +42,7 @@ print(status)  # Output: Minor
 # - Replacing multi-line if-else with one-liners
 
 # ✅ Syntax: value_if_true if condition else value_if_false
+
+
+#------------ Task for You! ------------
+# Try using the ternary operator to check if you are eligible for driving license or not.
