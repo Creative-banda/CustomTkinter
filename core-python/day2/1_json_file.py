@@ -52,6 +52,12 @@ print(data)
 # Summary
 # =====================================
 
-# ✅ We used json.load() to load JSON data from a file.
-# ✅ The JSON data is now a Python dictionary.
-# ✅ We can access keys and values just like normal Python dictionaries.
+# We used json.load() to load JSON data from a file.
+# The JSON data is now a Python dictionary.
+# We can access keys and values just like normal Python dictionaries.
+
+
+#---------------- Task for You! ---------------#
+# 1. Load the JSON data from 'data.json'.
+# 2. Do some modifications.
+# 3. Save the modified data back to 'data.json'.
