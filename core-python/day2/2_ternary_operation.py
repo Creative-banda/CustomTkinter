@@ -46,3 +46,4 @@ print("Using ternary:", result)  # Output: Odd
 
 #------------ Task for You! ------------
 # Try using the ternary operator to check if you are eligible for driving license or not.
+# Rule: You can get a driving license if you are 18 or older.
