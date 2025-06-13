@@ -25,7 +25,7 @@ class WordverseGame:
 
         # Load game data
         self.setup_game_data()
- 
+
     def setup_game_data(self):
         """Initialize all game data"""
         
